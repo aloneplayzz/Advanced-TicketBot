@@ -23,8 +23,8 @@ class OnMention(commands.Cog):
                  message.reference.resolved.author == self.bot.user)):
             try:
                 embed = discord.Embed(
-                    title="<:UA_Rocket_icons:1382701592851124254> Hey there! Thanks for mentioning me!",
-                    description=f"<:welcome:1382706419765350480> **Welcome to the {self.bot.user.name} Support System!**\n\n<:icons_heart:1382705238619984005> I'm here to help you create and manage support tickets efficiently.\n\n<:j_icons_Correct:1382701297987485706> **Quick Start:**\n• Use `{self.config.PREFIX}help` for command list\n• Use `/help` for slash commands\n• Set up with `{self.config.PREFIX}setup-tickets`\n\n<:people_icons:1384040549937451068> Need assistance? Join our support server below!",
+                    title=" Hey there! Thanks for mentioning me!",
+                    description=f" **Welcome to the {self.bot.user.name} Support System!**\n\n I'm here to help you create and manage support tickets efficiently.\n\n<:j_icons_Correct:1382701297987485706> **Quick Start:**\n• Use `{self.config.PREFIX}help` for command list\n• Use `/help` for slash commands\n• Set up with `{self.config.PREFIX}setup-tickets`\n\n<:people_icons:1384040549937451068> Need assistance? Join our support server below!",
                     color=0x000000
                 )
                 
@@ -33,19 +33,19 @@ class OnMention(commands.Cog):
                 embed.set_thumbnail(url=thumbnail_url)
                 
                 embed.add_field(
-                    name="<:Ticket_icons:1382703084815257610> **Quick Commands**",
+                    name=" **Quick Commands**",
                     value=f"`{self.config.PREFIX}setup-tickets` - Complete setup wizard\n`{self.config.PREFIX}add-category` - Add support category\n`{self.config.PREFIX}send-panel` - Deploy ticket panel",
                     inline=True
                 )
                 
                 embed.add_field(
-                    name="<:stats_1:1382703019334045830> **Useful Links**",
-                    value=f"<:Icons_link:1382706535766954035> **[Support Server]({self.config.SUPPORT_SERVER})**\n<:icons_wrench:1382702984940617738> **[Setup Guide](https://discord.gg/codexdev)**",
+                    name=" **Useful Links**",
+                    value=f" **[Support Server]({self.config.SUPPORT_SERVER})**\n<:icons_wrench:1382702984940617738> **[Setup Guide](https://discord.gg/codexdev)**",
                     inline=True
                 )
                 
                 embed.set_footer(
-                    text=f"Powered by CodeX Development™ • Prefix: {self.config.PREFIX}",
+                    text=f"Powered by Space Admin™ • Prefix: {self.config.PREFIX}",
                     icon_url=self.bot.user.display_avatar.url
                 )
                 
