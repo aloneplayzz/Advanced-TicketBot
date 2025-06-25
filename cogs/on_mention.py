@@ -28,7 +28,7 @@ class OnMention(commands.Cog):
                     color=0x000000
                 )
                 
-                support_guild = self.bot.get_guild(1381702592095809576)
+                support_guild = self.bot.get_guild(1355044348374286417)
                 thumbnail_url = support_guild.icon.url if support_guild and support_guild.icon else self.bot.user.display_avatar.url
                 embed.set_thumbnail(url=thumbnail_url)
                 
