@@ -127,18 +127,18 @@ class SupportSystem(commands.Cog):
                         category_id INTEGER,
                         log_channel_id INTEGER,
                         ping_role_id INTEGER,
-                        embed_title TEXT DEFAULT '<:Ticket_icons:1382703084815257610> Support Center',
-                        embed_description TEXT DEFAULT 'Need help? Select a category below to create a support ticket. Our team will assist you shortly! <:UA_Rocket_icons:1382701592851124254>',
+                        embed_title TEXT DEFAULT ' Support Center',
+                        embed_description TEXT DEFAULT 'Need help? Select a category below to create a support ticket. Our team will assist you shortly! ',
                         embed_color INTEGER DEFAULT 53247,
                         embed_image_url TEXT,
-                        embed_footer TEXT DEFAULT 'Powered by CodeX Development™',
+                        embed_footer TEXT DEFAULT 'Powered by Space Admin™',
                         panel_type TEXT DEFAULT 'dropdown',
                         ticket_limit INTEGER DEFAULT 3
                     )
                 """)
 
                 try:
-                    await cur.execute("ALTER TABLE tickets ADD COLUMN embed_footer TEXT DEFAULT 'Powered by CodeX Development™'")
+                    await cur.execute("ALTER TABLE tickets ADD COLUMN embed_footer TEXT DEFAULT 'Powered by Space Development™'")
                 except:
                     pass  # Column already exists
 
@@ -361,7 +361,7 @@ class SupportSystem(commands.Cog):
                 await ctx.response.defer(ephemeral=True)
 
             if not await check_database_connection(self.bot):
-                message = "<:icons_Wrong:1382701332955402341> | Database connection failed. Please try again later."
+                message = " | Database connection failed. Please try again later."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -370,20 +370,20 @@ class SupportSystem(commands.Cog):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:UA_Rocket_icons:1382701592851124254>  Support Setup",
+                title="  Support Setup",
                 description=f"**Welcome to the Advanced Ticket System Setup!**\n\n"
                             f"This wizard will guide you through configuring a  support system for your server.\n\n"
-                            f"**<:clipboard1:1383857546410070117> Required Steps:**\n"
+                            f"** Required Steps:**\n"
                             f"1. Select a support channel (where tickets will be announced)\n"
                             f"2. Choose a support role (staff who can manage tickets)\n"
                             f"3. Optionally select a category for ticket channels\n"
                             f"4. Customize your support panel appearance\n\n"
-                            f"<:icons_clock:1382701751206936697> **Setup expires in 29 minutes**",
+                            f" **Setup expires in 29 minutes**",
                 color=0x00D4FF,
                 timestamp=current_time
             )
             embed.add_field(
-                name="<:lightbulb:1382701619753386035> Pro Tips",
+                name=" Pro Tips",
                 value="• Use dedicated channels for better organization\n"
                       "• Create specific roles for support staff\n"
                       "• Categories help organize active tickets",
@@ -405,7 +405,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in setup_tickets: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -439,7 +439,7 @@ class SupportSystem(commands.Cog):
                         category = " ".join(words[1:])
 
             if len(category) > 25:
-                message = "<:icons_Wrong:1382701332955402341> | Category name cannot exceed 25 characters."
+                message = " | Category name cannot exceed 25 characters."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -461,7 +461,7 @@ class SupportSystem(commands.Cog):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:j_icons_Correct:1382701297987485706> Success" if success else "<:icons_Wrong:1382701332955402341> Error",
+                title=" Success" if success else " Error",
                 description=message,
                 color=0x00D4FF if success else 0xFF6B6B,
                 timestamp=current_time
@@ -475,7 +475,7 @@ class SupportSystem(commands.Cog):
             if success:
                 panel_success, panel_message = await update_ticket_panel(self.bot, ctx.guild.id)
                 if not panel_success and "not set up" not in panel_message:
-                    error_message = f"<:icons_Wrong:1382701332955402341> | Failed to update support panel: {panel_message}"
+                    error_message = f" | Failed to update support panel: {panel_message}"
                     if isinstance(ctx, discord.Interaction):
                         await ctx.followup.send(error_message, ephemeral=True)
                     else:
@@ -483,7 +483,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in add_category: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -503,7 +503,7 @@ class SupportSystem(commands.Cog):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:j_icons_Correct:1382701297987485706> Success" if success else "<:icons_Wrong:1382701332955402341> Error",
+                title=" Success" if success else " Error",
                 description=message,
                 color=0x00D4FF if success else 0xFF6B6B,
                 timestamp=current_time
@@ -517,7 +517,7 @@ class SupportSystem(commands.Cog):
             if success:
                 panel_success, panel_message = await update_ticket_panel(self.bot, ctx.guild.id)
                 if not panel_success and "not set up" not in panel_message:
-                    error_message = f"<:icons_Wrong:1382701332955402341> | Failed to update support panel: {panel_message}"
+                    error_message = f" | Failed to update support panel: {panel_message}"
                     if isinstance(ctx, discord.Interaction):
                         await ctx.followup.send(error_message, ephemeral=True)
                     else:
@@ -525,7 +525,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in remove_category: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -544,13 +544,13 @@ class SupportSystem(commands.Cog):
 
             if not (user_has_support or is_admin):
                 embed = discord.Embed(
-                    title="<:icons_locked:1382701901685985361> Permission Denied",
+                    title=" Permission Denied",
                     description="**You don't have permission to view the categories list.**\n\n"
                                "This command is restricted to support staff and administrators only.",
                     color=0xFF6B6B
                 )
                 embed.add_field(
-                    name="<:Target:1382706193855942737> Required Permission",
+                    name=" Required Permission",
                     value="• **Support Staff** - Members with the support role\n• **Administrator** - Server administrators",
                     inline=False
                 )
@@ -562,7 +562,7 @@ class SupportSystem(commands.Cog):
 
             categories = await get_ticket_categories(self.bot, ctx.guild.id)
             if not categories:
-                message = "<:icons_Wrong:1382701332955402341> | No support categories found. Use `/add-category <category>` to add some."
+                message = " | No support categories found. Use `/add-category <category>` to add some."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -572,11 +572,11 @@ class SupportSystem(commands.Cog):
             current_time = utc_to_gmt(discord.utils.utcnow())
             category_list = []
             for category_name, emoji in categories:
-                display_emoji = emoji if emoji else "<:Ticket_icons:1382703084815257610>"
+                display_emoji = emoji if emoji else ""
                 category_list.append(f"• {display_emoji} {category_name}")
             
             embed = discord.Embed(
-                title="<:clipboard1:1383857546410070117> Support Categories",
+                title=" Support Categories",
                 description="\n".join(category_list),
                 color=0x00D4FF,
                 timestamp=current_time
@@ -589,7 +589,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in list_categories: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -612,9 +612,9 @@ class SupportSystem(commands.Cog):
             if not categories:
                 current_time = utc_to_gmt(discord.utils.utcnow())
                 embed = discord.Embed(
-                    title="<:icons_Wrong:1382701332955402341> No Categories Found",
+                    title=" No Categories Found",
                     description="You must create at least one ticket category before sending a panel.\n\n"
-                              "**<:lightbulb:1382701619753386035> How to add categories:**\n"
+                              "** How to add categories:**\n"
                               "Use `/add-category <name>` to create categories.\n\n"
                               "**Examples:**\n"
                               "`/add-category Technical Support`\n"
@@ -633,7 +633,7 @@ class SupportSystem(commands.Cog):
             success, message = await update_ticket_panel(self.bot, ctx.guild.id, panel_type=type)
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:j_icons_Correct:1382701297987485706> Support Panel Sent" if success else "<:icons_Wrong:1382701332955402341> Error",
+                title=" Support Panel Sent" if success else " Error",
                 description=message,
                 color=0x00D4FF if success else 0xFF6B6B,
                 timestamp=current_time
@@ -657,7 +657,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in send_panel: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -671,7 +671,7 @@ class SupportSystem(commands.Cog):
                 await ctx.response.defer(ephemeral=True)
 
             if not await is_ticket_channel(self.bot, ctx.channel):
-                message = "<:icons_Wrong:1382701332955402341> | This command can only be used in a support ticket channel."
+                message = " | This command can only be used in a support ticket channel."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -680,7 +680,7 @@ class SupportSystem(commands.Cog):
 
             ticket_role = await get_ticket_role(self.bot, ctx.guild.id)
             if not ticket_role:
-                message = "<:icons_Wrong:1382701332955402341> | Support system is not set up properly."
+                message = " | Support system is not set up properly."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -689,7 +689,7 @@ class SupportSystem(commands.Cog):
 
             ticket_creator_id = await get_ticket_creator(self.bot, ctx.channel.id)
             if not ticket_creator_id:
-                message = "<:icons_Wrong:1382701332955402341> | Could not determine the ticket creator."
+                message = " | Could not determine the ticket creator."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -713,7 +713,7 @@ class SupportSystem(commands.Cog):
             invoker = ctx.author if isinstance(ctx, commands.Context) else ctx.user
             user_has_support = await user_has_support_role(self.bot, invoker)
             if not (invoker == ticket_creator or user_has_support):
-                message = "<:icons_Wrong:1382701332955402341> | You do not have permission to close this ticket."
+                message = " | You do not have permission to close this ticket."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -724,7 +724,7 @@ class SupportSystem(commands.Cog):
             ticket_info = await get_ticket_info(self.bot, ctx.channel.id)
 
             if not ticket_info:
-                message = "<:icons_Wrong:1382701332955402341> | Could not retrieve ticket information."
+                message = " | Could not retrieve ticket information."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -741,7 +741,7 @@ class SupportSystem(commands.Cog):
             }
 
             confirmation_embed = discord.Embed(
-                title="<:icons_locked:1382701901685985361> Close Ticket Confirmation",
+                title=" Close Ticket Confirmation",
                 description="**Are you sure you want to close this ticket?**\n\nThis action cannot be undone.",
                 color=0xFF6B6B
             )
@@ -756,14 +756,14 @@ class SupportSystem(commands.Cog):
 
         except discord.Forbidden as e:
             logger.error(f"Forbidden error in close_ticket: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | I don't have permission to delete the channel: {e}"
+            error_message = f" | I don't have permission to delete the channel: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
                 await ctx.send(error_message)
         except Exception as e:
             logger.error(f"Error in close_ticket: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -782,7 +782,7 @@ class SupportSystem(commands.Cog):
 
             if limit < 1 or limit > 10:
                 embed = discord.Embed(
-                    title="<:icons_Wrong:1382701332955402341> Invalid Limit",
+                    title=" Invalid Limit",
                     description="Ticket limit must be between 1 and 10.",
                     color=0xFF0000
                 )
@@ -800,7 +800,7 @@ class SupportSystem(commands.Cog):
 
                 if cur.rowcount == 0:
                     embed = discord.Embed(
-                        title="<:icons_Wrong:1382701332955402341> Setup Required",
+                        title=" Setup Required",
                         description="Please run `/setup-tickets` first to configure the ticket system.",
                         color=0xFF0000
                     )
@@ -814,7 +814,7 @@ class SupportSystem(commands.Cog):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:j_icons_Correct:1382701297987485706> Ticket Limit Updated",
+                title=" Ticket Limit Updated",
                 description=f"**New ticket limit:** {limit} tickets per user\n\nUsers can now have up to {limit} open tickets at once.",
                 color=0x00D4FF,
                 timestamp=current_time
@@ -828,7 +828,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in set_limit: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -846,7 +846,7 @@ class SupportSystem(commands.Cog):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:Icons_Trash:1382703995700645969> Categories Reset" if success else "<:icons_Wrong:1382701332955402341> Error",
+                title=" Categories Reset" if success else " Error",
                 description=message,
                 color=0x00D4FF if success else 0xFF6B6B,
                 timestamp=current_time
@@ -860,7 +860,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in reset_categories: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -875,7 +875,7 @@ class SupportSystem(commands.Cog):
                 await ctx.response.defer(ephemeral=True)
 
             if not await is_ticket_channel(self.bot, ctx.channel):
-                message = "<:icons_Wrong:1382701332955402341> | This command can only be used in a support ticket channel."
+                message = " | This command can only be used in a support ticket channel."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -885,7 +885,7 @@ class SupportSystem(commands.Cog):
             invoker = ctx.author if isinstance(ctx, commands.Context) else ctx.user
             user_has_support = await user_has_support_role(self.bot, invoker)
             if not user_has_support:
-                message = "<:icons_Wrong:1382701332955402341> | You do not have permission to transfer tickets."
+                message = " | You do not have permission to transfer tickets."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -894,7 +894,7 @@ class SupportSystem(commands.Cog):
 
             target_has_support = await user_has_support_role(self.bot, member)
             if not target_has_support:
-                message = f"<:icons_Wrong:1382701332955402341> | {member.mention} does not have the support role."
+                message = f" | {member.mention} does not have the support role."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -903,7 +903,7 @@ class SupportSystem(commands.Cog):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:icons_Person:1382703571056853082> Ticket Transferred",
+                title=" Ticket Transferred",
                 description=f"**Transferred by:** {invoker.mention}\n"
                             f"**Transferred to:** {member.mention}\n"
                             f"**Transfer time:** {current_time.strftime('%I:%M %p GMT')}\n\n"
@@ -914,7 +914,7 @@ class SupportSystem(commands.Cog):
             embed.set_footer(text=" Support System • Ticket Transfer")
             await ctx.channel.send(embed=embed)
 
-            success_message = f"<:j_icons_Correct:1382701297987485706> | Ticket successfully transferred to {member.mention}."
+            success_message = f" | Ticket successfully transferred to {member.mention}."
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(success_message, ephemeral=True)
             else:
@@ -922,7 +922,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in transfer_ticket: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -937,7 +937,7 @@ class SupportSystem(commands.Cog):
                 await ctx.response.defer(ephemeral=True)
 
             if not await is_ticket_channel(self.bot, ctx.channel):
-                message = "<:icons_Wrong:1382701332955402341> | This command can only be used in a support ticket channel."
+                message = " | This command can only be used in a support ticket channel."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -948,7 +948,7 @@ class SupportSystem(commands.Cog):
             user_has_support = await user_has_support_role(self.bot, invoker)
 
             if not user_has_support:
-                message = "<:icons_Wrong:1382701332955402341> | Only support staff can add users to tickets."
+                message = " | Only support staff can add users to tickets."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -964,7 +964,7 @@ class SupportSystem(commands.Cog):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:welcome:1382706419765350480> User Added to Ticket",
+                title=" User Added to Ticket",
                 description=f"**Added user:** {user.mention}\n"
                             f"**Added by:** {invoker.mention}\n"
                             f"**Added at:** {current_time.strftime('%I:%M %p GMT')}\n\n"
@@ -975,7 +975,7 @@ class SupportSystem(commands.Cog):
             embed.set_footer(text=" Support System • User Management")
             await ctx.channel.send(embed=embed)
 
-            success_message = f"<:j_icons_Correct:1382701297987485706> | {user.mention} has been added to the ticket."
+            success_message = f" | {user.mention} has been added to the ticket."
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(success_message, ephemeral=True)
             else:
@@ -983,7 +983,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in add_user: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -998,7 +998,7 @@ class SupportSystem(commands.Cog):
                 await ctx.response.defer(ephemeral=True)
 
             if not await is_ticket_channel(self.bot, ctx.channel):
-                message = "<:icons_Wrong:1382701332955402341> | This command can only be used in a support ticket channel."
+                message = " | This command can only be used in a support ticket channel."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -1009,7 +1009,7 @@ class SupportSystem(commands.Cog):
             user_has_support = await user_has_support_role(self.bot, invoker)
 
             if not user_has_support:
-                message = "<:icons_Wrong:1382701332955402341> | Only support staff can remove users from tickets."
+                message = " | Only support staff can remove users from tickets."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -1019,7 +1019,7 @@ class SupportSystem(commands.Cog):
             ticket_creator_id = await get_ticket_creator(self.bot, ctx.channel.id)
 
             if user.id == ticket_creator_id:
-                message = "<:icons_Wrong:1382701332955402341> | You cannot remove the ticket creator from their own ticket."
+                message = " | You cannot remove the ticket creator from their own ticket."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -1028,7 +1028,7 @@ class SupportSystem(commands.Cog):
 
             ticket_role = await get_ticket_role(self.bot, ctx.guild.id)
             if ticket_role and ticket_role in user.roles:
-                message = "<:icons_Wrong:1382701332955402341> | You cannot remove support staff from tickets."
+                message = " | You cannot remove support staff from tickets."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -1044,7 +1044,7 @@ class SupportSystem(commands.Cog):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> User Removed from Ticket",
+                title=" User Removed from Ticket",
                 description=f"**Removed user:** {user.mention}\n"
                             f"**Removed by:** {invoker.mention}\n"
                             f"**Removed at:** {current_time.strftime('%I:%M %p GMT')}",
@@ -1054,7 +1054,7 @@ class SupportSystem(commands.Cog):
             embed.set_footer(text=" Support System • User Management")
             await ctx.channel.send(embed=embed)
 
-            success_message = f"<:j_icons_Correct:1382701297987485706> | {user.mention} has been removed from the ticket."
+            success_message = f" | {user.mention} has been removed from the ticket."
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(success_message, ephemeral=True)
             else:
@@ -1062,7 +1062,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in remove_user: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -1076,7 +1076,7 @@ class SupportSystem(commands.Cog):
                 await ctx.response.defer(ephemeral=True)
 
             if not await is_ticket_channel(self.bot, ctx.channel):
-                message = "<:icons_Wrong:1382701332955402341> | This command can only be used in a support ticket channel."
+                message = " | This command can only be used in a support ticket channel."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -1086,7 +1086,7 @@ class SupportSystem(commands.Cog):
             from utils.tickets import get_ticket_info
             ticket_info = await get_ticket_info(self.bot, ctx.channel.id)
             if not ticket_info:
-                message = "<:icons_Wrong:1382701332955402341> | Could not retrieve ticket information."
+                message = " | Could not retrieve ticket information."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message, ephemeral=True)
                 else:
@@ -1116,15 +1116,15 @@ class SupportSystem(commands.Cog):
             )
 
             embed.add_field(
-                name="<:Ticket_icons:1382703084815257610> Ticket Details",
+                name=" Ticket Details",
                 value=f"**Number:** #{ticket_info['ticket_number']:04d}\n"
-                      f"**Status:** <:j_icons_Correct:1382701297987485706> Open\n"
+                      f"**Status:**  Open\n"
                       f"**Messages:** {message_count}",
                 inline=True
             )
 
             embed.add_field(
-                name="<:icons_Person:1382703571056853082> Creator Information",
+                name=" Creator Information",
                 value=f"**User:** {ticket_creator.mention if ticket_creator else 'Unknown'}\n"
                       f"**ID:** `{ticket_info['creator_id']}`\n"
                       f"**Status:** {'Online' if ticket_creator and ticket_creator.status != discord.Status.offline else 'Offline'}",
@@ -1132,7 +1132,7 @@ class SupportSystem(commands.Cog):
             )
 
             embed.add_field(
-                name="<:Icons_calender:1382703729504948265> Timeline",
+                name=" Timeline",
                 value=f"**Created:** {discord.utils.format_dt(created_time, 'R')}\n"
                       f"**Created Date:** {created_time.strftime('%B %d, %Y')}\n"
                       f"**Duration:** {discord.utils.format_dt(created_time, 'R')}",
@@ -1140,7 +1140,7 @@ class SupportSystem(commands.Cog):
             )
 
             embed.add_field(
-                name="<:welcome:1382706419765350480> Access List",
+                name=" Access List",
                 value=f"**Users with access:** {len(accessible_users)}\n" + 
                       (f"**Users:** " + ", ".join([user.mention for user in accessible_users[:5]]) + 
                        (f" and {len(accessible_users) - 5} more..." if len(accessible_users) > 5 else "")
@@ -1158,7 +1158,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in ticket_info: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -1176,9 +1176,9 @@ class SupportSystem(commands.Cog):
 
             if not await is_ticket_channel(self.bot, ctx.channel):
                 embed = discord.Embed(
-                    title="<:icons_Wrong:1382701332955402341> Not a Ticket Channel",
+                    title=" Not a Ticket Channel",
                     description="**This command can only be used in support ticket channels.**\n\n"
-                               "<:Ticket_icons:1382703084815257610> This command is designed for ticket management and can only be used within active support tickets.",
+                               " This command is designed for ticket management and can only be used within active support tickets.",
                     color=0xFF6B6B
                 )
                 if isinstance(ctx, discord.Interaction):
@@ -1192,13 +1192,13 @@ class SupportSystem(commands.Cog):
 
             if not user_has_support:
                 embed = discord.Embed(
-                    title="<:icons_locked:1382701901685985361> Permission Denied",
+                    title=" Permission Denied",
                     description="**You don't have permission to rename this ticket.**\n\n"
                                "Only support staff members can rename tickets.",
                     color=0xFF6B6B
                 )
                 embed.add_field(
-                    name="<:Target:1382706193855942737> Required Permission",
+                    name=" Required Permission",
                     value="• **Support Staff** - Members with the support role",
                     inline=False
                 )
@@ -1210,7 +1210,7 @@ class SupportSystem(commands.Cog):
 
             if len(name) > 100:
                 embed = discord.Embed(
-                    title="<:icons_Wrong:1382701332955402341> Name Too Long",
+                    title=" Name Too Long",
                     description=f"**Channel name cannot exceed 100 characters.**\n\n"
                                f"**Your name:** {len(name)} characters\n"
                                f"**Maximum allowed:** 100 characters\n"
@@ -1225,7 +1225,7 @@ class SupportSystem(commands.Cog):
 
             if len(name.strip()) == 0:
                 embed = discord.Embed(
-                    title="<:icons_Wrong:1382701332955402341> Invalid Name",
+                    title=" Invalid Name",
                     description="**Channel name cannot be empty.**\n\nPlease provide a valid name for the ticket channel.",
                     color=0xFF6B6B
                 )
@@ -1258,9 +1258,9 @@ class SupportSystem(commands.Cog):
 
             if not sanitized_name:
                 embed = discord.Embed(
-                    title="<:icons_Wrong:1382701332955402341> Invalid Characters",
+                    title=" Invalid Characters",
                     description="**The name contains only invalid characters.**\n\n"
-                               "<:clipboard1:1383857546410070117> **Valid characters:**\n"
+                               " **Valid characters:**\n"
                                "• Letters (a-z)\n"
                                "• Numbers (0-9)\n"
                                "• Dashes (-)\n"
@@ -1278,7 +1278,7 @@ class SupportSystem(commands.Cog):
 
             if old_name == sanitized_name:
                 embed = discord.Embed(
-                    title="<:icons_Wrong:1382701332955402341> Same Name",
+                    title=" Same Name",
                     description=f"**The channel is already named `{sanitized_name}`.**\n\n"
                                "Please choose a different name for the ticket channel.",
                     color=0xFF6B6B
@@ -1292,7 +1292,7 @@ class SupportSystem(commands.Cog):
             name_changed = name.lower().replace(' ', '-') != sanitized_name
             if name_changed:
                 preview_embed = discord.Embed(
-                    title="<:clipboard1:1383857546410070117> Name Preview",
+                    title=" Name Preview",
                     description="**Your channel name has been adjusted for Discord compatibility:**",
                     color=0xFF8C00
                 )
@@ -1307,7 +1307,7 @@ class SupportSystem(commands.Cog):
                     inline=True
                 )
                 preview_embed.add_field(
-                    name="<:j_icons_Correct:1382701297987485706> Auto-Adjustments Made",
+                    name=" Auto-Adjustments Made",
                     value="• Converted to lowercase\n• Replaced spaces with dashes\n• Removed special characters\n• Applied Discord naming rules",
                     inline=False
                 )
@@ -1325,7 +1325,7 @@ class SupportSystem(commands.Cog):
                 error_msg = str(e).lower()
                 if "name" in error_msg or "invalid" in error_msg:
                     embed = discord.Embed(
-                        title="<:icons_Wrong:1382701332955402341> Invalid Channel Name",
+                        title=" Invalid Channel Name",
                         description=f"**Discord rejected the channel name.**\n\n"
                                    f"**Error:** {str(e)}\n"
                                    f"**Attempted name:** `{sanitized_name}`\n\n"
@@ -1343,7 +1343,7 @@ class SupportSystem(commands.Cog):
             current_time = utc_to_gmt(discord.utils.utcnow())
 
             success_embed = discord.Embed(
-                title="<:j_icons_Correct:1382701297987485706> Ticket Renamed Successfully",
+                title=" Ticket Renamed Successfully",
                 description=f"**Channel has been renamed to `{sanitized_name}`**",
                 color=0x00FF88,
                 timestamp=current_time
@@ -1359,7 +1359,7 @@ class SupportSystem(commands.Cog):
                     ticket_number_str = f"#{ticket_info['ticket_number']:04d}" if ticket_info else "#0000"
 
                     log_embed = discord.Embed(
-                        title="<:clipboard1:1383857546410070117> Ticket Renamed",
+                        title=" Ticket Renamed",
                         description=f"Ticket `{ticket_number_str}` has been renamed by {invoker.mention}",
                         color=0x00D4FF,
                         timestamp=current_time
@@ -1384,16 +1384,16 @@ class SupportSystem(commands.Cog):
             except Exception as log_error:
                 logger.error(f"Error logging rename action: {log_error}")
 
-            confirmation_message = f"<:j_icons_Correct:1382701297987485706> **Ticket successfully renamed to `{sanitized_name}`**"
+            confirmation_message = f" **Ticket successfully renamed to `{sanitized_name}`**"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(confirmation_message, ephemeral=True)
 
         except discord.Forbidden as e:
             logger.error(f"Permission error renaming ticket: {e}")
             embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Permission Error",
+                title=" Permission Error",
                 description="**I don't have permission to rename this channel.**\n\n"
-                           "<:icons_wrench:1382702984940617738> **Required Bot Permissions:**\n"
+                           " **Required Bot Permissions:**\n"
                            "• Manage Channels\n"
                            "• View Channel\n\n"
                            "Please ensure I have the proper permissions and try again.",
@@ -1412,7 +1412,7 @@ class SupportSystem(commands.Cog):
         except discord.HTTPException as e:
             logger.error(f"HTTP error renaming ticket: {e}")
             embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Discord API Error",
+                title=" Discord API Error",
                 description=f"**Discord rejected the rename request.**\n\n"
                            f"**Error:** {str(e)}\n\n"
                            "This might be due to rate limiting or invalid characters. Please try again in a moment.",
@@ -1429,7 +1429,7 @@ class SupportSystem(commands.Cog):
             logger.error(traceback.format_exc())
 
             embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Unexpected Error",
+                title=" Unexpected Error",
                 description=f"**An unexpected error occurred while renaming the ticket.**\n\n"
                            f"**Error:** {str(e)}\n\n"
                            "Please try again. If the issue persists, contact support.",
@@ -1449,9 +1449,9 @@ class SupportSystem(commands.Cog):
 
             if not await is_ticket_channel(self.bot, ctx.channel):
                 embed = discord.Embed(
-                    title="<:icons_Wrong:1382701332955402341> Not a Ticket Channel",
+                    title=" Not a Ticket Channel",
                     description="**This command can only be used in support ticket channels.**\n\n"
-                               "<:Ticket_icons:1382703084815257610> Use this command within an active support ticket to claim it for handling.",
+                               " Use this command within an active support ticket to claim it for handling.",
                     color=0xFF6B6B
                 )
                 if isinstance(ctx, discord.Interaction):
@@ -1468,7 +1468,7 @@ class SupportSystem(commands.Cog):
 
                 if not result:
                     embed = discord.Embed(
-                        title="<:icons_Wrong:1382701332955402341> System Configuration Error",
+                        title=" System Configuration Error",
                         description="**Ticket system is not properly configured.**\n\n"
                                    "Please contact an administrator to resolve this issue.",
                         color=0xFF6B6B
@@ -1487,11 +1487,11 @@ class SupportSystem(commands.Cog):
 
                 if not (has_support_role or is_admin):
                     embed = discord.Embed(
-                        title="<:shield:1382703287891136564> Permission Denied",
+                        title=" Permission Denied",
                         description="**Only support staff can claim tickets.**\n\n"
-                                   f"<:Target:1382706193855942737> **Required Role:** {support_role.mention if support_role else 'Support Role'}\n"
-                                   f"<:icons_Person:1382703571056853082> **Your Roles:** {', '.join([role.mention for role in invoker.roles if role != ctx.guild.default_role][:3]) or 'No special roles'}\n\n"
-                                   f"<:lightbulb:1382701619753386035> **Need access?** Contact an administrator to get the support role.",
+                                   f" **Required Role:** {support_role.mention if support_role else 'Support Role'}\n"
+                                   f" **Your Roles:** {', '.join([role.mention for role in invoker.roles if role != ctx.guild.default_role][:3]) or 'No special roles'}\n\n"
+                                   f" **Need access?** Contact an administrator to get the support role.",
                         color=0xFF6B6B
                     )
                     if isinstance(ctx, discord.Interaction):
@@ -1505,7 +1505,7 @@ class SupportSystem(commands.Cog):
 
                 if not ticket_result:
                     embed = discord.Embed(
-                        title="<:icons_Wrong:1382701332955402341> Ticket Not Found",
+                        title=" Ticket Not Found",
                         description="**Could not find ticket information.**\n\n"
                                    "This ticket may not be properly registered in the system.",
                         color=0xFF6B6B
@@ -1521,11 +1521,11 @@ class SupportSystem(commands.Cog):
                 if current_claimer_id:
                     if current_claimer_id == invoker.id:
                         embed = discord.Embed(
-                            title="<:j_icons_Correct:1382701297987485706> Already Your Ticket",
+                            title=" Already Your Ticket",
                             description=f"**You have already claimed this ticket.**\n\n"
-                                       f"<:Target:1382706193855942737> **Status:** This ticket is assigned to you\n"
-                                       f"<:clipboard1:1383857546410070117> **Action:** Continue providing support\n"
-                                       f"<:type_icons:1384042158801027136> **Next Step:** Assist the customer as normal",
+                                       f" **Status:** This ticket is assigned to you\n"
+                                       f" **Action:** Continue providing support\n"
+                                       f" **Next Step:** Assist the customer as normal",
                             color=0x00FF88
                         )
                         if isinstance(ctx, discord.Interaction):
@@ -1536,12 +1536,12 @@ class SupportSystem(commands.Cog):
 
                     claimer = ctx.guild.get_member(current_claimer_id)
                     embed = discord.Embed(
-                        title="<:icons_locked:1382701901685985361> Ticket Already Claimed",
+                        title=" Ticket Already Claimed",
                         description=f"**This ticket is already being handled by another agent.**\n\n"
-                                   f"<:Target:1382706193855942737> **Current Agent:** {claimer.mention if claimer else f'<@{current_claimer_id}>'}\n"
-                                   f"<:label:1384044597386285121> **Agent Name:** {claimer.display_name if claimer else 'Unknown Agent'}\n"
-                                   f"<:clipboard1:1383857546410070117> **Status:** 🟢 Currently Active\n\n"
-                                   f"<:lightbulb:1382701619753386035> **Need to transfer?** Use `/transfer-ticket @new_agent` command",
+                                   f" **Current Agent:** {claimer.mention if claimer else f'<@{current_claimer_id}>'}\n"
+                                   f" **Agent Name:** {claimer.display_name if claimer else 'Unknown Agent'}\n"
+                                   f" **Status:** 🟢 Currently Active\n\n"
+                                   f" **Need to transfer?** Use `/transfer-ticket @new_agent` command",
                         color=0xFF8C00
                     )
                     if isinstance(ctx, discord.Interaction):
@@ -1557,7 +1557,7 @@ class SupportSystem(commands.Cog):
 
                 if cur.rowcount == 0:
                     embed = discord.Embed(
-                        title="<a:lighting_icons:1383871485122449409> Claim Conflict",
+                        title=" Claim Conflict",
                         description="**Another agent claimed this ticket at the same time.**\n\n"
                                    "Please refresh and try again if needed.",
                         color=0xFF8C00
@@ -1584,7 +1584,7 @@ class SupportSystem(commands.Cog):
 
             await ctx.channel.send(claim_message)
 
-            confirmation_msg = f"<:j_icons_Correct:1382701297987485706> You have successfully claimed ticket #{ticket_number:04d}!"
+            confirmation_msg = f" You have successfully claimed ticket #{ticket_number:04d}!"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(confirmation_msg, ephemeral=True)
             else:
@@ -1629,7 +1629,7 @@ class SupportSystem(commands.Cog):
             logger.error(traceback.format_exc())
 
             error_embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Claim Error",
+                title=" Claim Error",
                 description=f"**An error occurred while claiming the ticket.**\n\n"
                            f"**Error:** {str(e)}\n\n"
                            f"Please try again. If the issue persists, contact an administrator.",
@@ -1656,7 +1656,7 @@ class SupportSystem(commands.Cog):
                 )
                 if await cur.fetchone():
                     embed = discord.Embed(
-                        title="<:icons_Wrong:1382701332955402341> Already Blacklisted",
+                        title=" Already Blacklisted",
                         description=f"**{user.mention} is already blacklisted.**\n\n"
                                    f"This user cannot create tickets in this server.",
                         color=0xFF6B6B
@@ -1675,16 +1675,16 @@ class SupportSystem(commands.Cog):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:icons_locked:1382701901685985361> User Blacklisted",
+                title=" User Blacklisted",
                 description=f"**{user.mention} has been blacklisted from creating tickets.**\n\n"
-                           f"<:Target:1382706193855942737> **User:** {user.display_name} (`{user.id}`)\n"
-                           f"<:icons_Person:1382703571056853082> **Blacklisted by:** {ctx.author.mention if isinstance(ctx, commands.Context) else ctx.user.mention}\n"
-                           f"<:Icons_calender:1382703729504948265> **Date:** {current_time.strftime('%B %d, %Y at %I:%M %p GMT')}",
+                           f" **User:** {user.display_name} (`{user.id}`)\n"
+                           f" **Blacklisted by:** {ctx.author.mention if isinstance(ctx, commands.Context) else ctx.user.mention}\n"
+                           f" **Date:** {current_time.strftime('%B %d, %Y at %I:%M %p GMT')}",
                 color=0xFF6B6B,
                 timestamp=current_time
             )
             embed.add_field(
-                name="<:lightbulb:1382701619753386035> Effect",
+                name=" Effect",
                 value="• User cannot create new tickets\n"
                       "• Existing tickets remain unaffected\n"
                       "• Can be removed with `blacklist-remove-user`",
@@ -1699,7 +1699,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in blacklist_user: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -1723,7 +1723,7 @@ class SupportSystem(commands.Cog):
                 
                 if not result:
                     embed = discord.Embed(
-                        title="<:icons_Wrong:1382701332955402341> User Not Blacklisted",
+                        title=" User Not Blacklisted",
                         description=f"**{user.mention} is not currently blacklisted.**\n\n"
                                    f"This user can already create tickets normally.",
                         color=0xFF6B6B
@@ -1742,16 +1742,16 @@ class SupportSystem(commands.Cog):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:j_icons_Correct:1382701297987485706> User Removed from Blacklist",
+                title=" User Removed from Blacklist",
                 description=f"**{user.mention} has been removed from the ticket blacklist.**\n\n"
-                           f"<:Target:1382706193855942737> **User:** {user.display_name} (`{user.id}`)\n"
-                           f"<:icons_Person:1382703571056853082> **Removed by:** {ctx.author.mention if isinstance(ctx, commands.Context) else ctx.user.mention}\n"
-                           f"<:Icons_calender:1382703729504948265> **Removed on:** {current_time.strftime('%B %d, %Y at %I:%M %p GMT')}",
+                           f" **User:** {user.display_name} (`{user.id}`)\n"
+                           f" **Removed by:** {ctx.author.mention if isinstance(ctx, commands.Context) else ctx.user.mention}\n"
+                           f" **Removed on:** {current_time.strftime('%B %d, %Y at %I:%M %p GMT')}",
                 color=0x00FF88,
                 timestamp=current_time
             )
             embed.add_field(
-                name="<:j_icons_Correct:1382701297987485706> Effect",
+                name=" Effect",
                 value="• User can now create tickets normally\n"
                       "• Previous blacklist restrictions lifted\n"
                       "• Full access to support system restored",
@@ -1766,7 +1766,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in blacklist_remove_user: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -1789,7 +1789,7 @@ class SupportSystem(commands.Cog):
 
             if not blacklisted:
                 embed = discord.Embed(
-                    title="<:j_icons_Correct:1382701297987485706> No Blacklisted Users",
+                    title=" No Blacklisted Users",
                     description="**No users are currently blacklisted from creating tickets.**\n\n"
                                "All members can create tickets normally.",
                     color=0x00FF88
@@ -1802,7 +1802,7 @@ class SupportSystem(commands.Cog):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:icons_locked:1382701901685985361> Blacklisted Users",
+                title=" Blacklisted Users",
                 description=f"**{len(blacklisted)} user(s) currently blacklisted from creating tickets.**",
                 color=0xFF6B6B,
                 timestamp=current_time
@@ -1825,14 +1825,14 @@ class SupportSystem(commands.Cog):
                 blacklist_text += f"• {user_display} - by {blacklister_display} {date_display}\n"
 
             embed.add_field(
-                name="<:clipboard1:1383857546410070117> Blacklisted Users",
+                name=" Blacklisted Users",
                 value=blacklist_text if blacklist_text else "No users found",
                 inline=False
             )
 
             if len(blacklisted) > 10:
                 embed.add_field(
-                    name="<:lightbulb:1382701619753386035> Note",
+                    name=" Note",
                     value=f"Showing first 10 of {len(blacklisted)} blacklisted users.",
                     inline=False
                 )
@@ -1846,7 +1846,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in blacklist_list: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -1861,29 +1861,29 @@ class SupportSystem(commands.Cog):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:icons_help:1382704281945112645> Frequently Asked Questions",
+                title=" Frequently Asked Questions",
                 description="**Welcome to our comprehensive FAQ section!**\n\nSelect a category below to find answers to common questions about our  support system.",
                 color=0x00D4FF,
                 timestamp=current_time
             )
 
             embed.add_field(
-                name="<:icons_help:1382704281945112645> **Available Categories**",
-                value="**<:Ticket_icons:1382703084815257610> Getting Started** - Creating tickets, basics\n"
-                      "**<:icons_clock:1382701751206936697> Response & Priority** - Response times, urgency\n"
-                      "**<:Target:1382706193855942737> Ticket Management** - Managing, closing, users\n"
-                      "**<:clipboard1:1383857546410070117> Features & Settings** - Transcripts, limits, ratings\n"
-                      "**<:icons_wrench:1382702984940617738> Troubleshooting** - Common issues, solutions",
+                name=" **Available Categories**",
+                value="** Getting Started** - Creating tickets, basics\n"
+                      "** Response & Priority** - Response times, urgency\n"
+                      "** Ticket Management** - Managing, closing, users\n"
+                      "** Features & Settings** - Transcripts, limits, ratings\n"
+                      "** Troubleshooting** - Common issues, solutions",
                 inline=False
             )
 
             embed.add_field(
-                name="<:UA_Rocket_icons:1382701592851124254> **Quick Access**",
+                name=" **Quick Access**",
                 value="Need immediate help? Create a support ticket for personalized assistance from our expert team!",
                 inline=False
             )
 
-            embed.set_footer(text="CodeX Development •  Support System • Interactive FAQ")
+            embed.set_footer(text="Space Development •  Support System • Interactive FAQ")
             embed.set_thumbnail(url=ctx.guild.icon.url if ctx.guild.icon else self.bot.user.display_avatar.url)
 
             view = FAQCategoryView(self.bot)
@@ -1894,7 +1894,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in faq: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -1913,7 +1913,7 @@ class SupportSystem(commands.Cog):
                 result = await cur.fetchone()
 
                 if not result:
-                    message = "<:icons_Wrong:1382701332955402341> | Support system is not set up. Use `/setup-tickets` first."
+                    message = " | Support system is not set up. Use `/setup-tickets` first."
                     if isinstance(ctx, discord.Interaction):
                         await ctx.followup.send(message, ephemeral=True)
                     else:
@@ -1932,13 +1932,13 @@ class SupportSystem(commands.Cog):
             current_time = utc_to_gmt(discord.utils.utcnow())
             status = "ENABLED" if new_mode else "DISABLED"
             color = 0xFF6B6B if new_mode else 0x00FF88
-            emoji = "<:icons_wrench:1382702984940617738>" if new_mode else "<:j_icons_Correct:1382701297987485706>"
+            emoji = "" if new_mode else ""
 
             embed = discord.Embed(
                 title=f"{emoji} Maintenance Mode {status}",
                 description=f"**Maintenance mode has been {status.lower()}.**\n\n"
-                           f"{'<:warning:1382701413284446228> **Ticket creation is now disabled.** Users cannot create new tickets.' if new_mode else '<:j_icons_Correct:1382701297987485706> **Ticket creation is now enabled.** Users can create tickets normally.'}\n\n"
-                           f"**Status:** {'<:icons_wrench:1382702984940617738> Under Maintenance' if new_mode else '🟢 Operational'}\n"
+                           f"{' **Ticket creation is now disabled.** Users cannot create new tickets.' if new_mode else ' **Ticket creation is now enabled.** Users can create tickets normally.'}\n\n"
+                           f"**Status:** {' Under Maintenance' if new_mode else '🟢 Operational'}\n"
                            f"**Changed by:** {ctx.author.mention if isinstance(ctx, commands.Context) else ctx.user.mention}\n"
                            f"**Changed at:** {current_time.strftime('%I:%M %p GMT')}",
                 color=color,
@@ -1953,7 +1953,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in maintenance_mode: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}"
+            error_message = f" | An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -1969,7 +1969,7 @@ class SupportSystem(commands.Cog):
                 await ctx.response.defer(ephemeral=True)
 
             if len(message) > 2000:
-                error_message = "<:icons_Wrong:1382701332955402341> | Announcement message cannot exceed 2000 characters."
+                error_message = " | Announcement message cannot exceed 2000 characters."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(error_message, ephemeral=True)
                 else:
@@ -1984,7 +1984,7 @@ class SupportSystem(commands.Cog):
                 tickets = await cur.fetchall()
 
             if not tickets:
-                message_text = "<:megaphone:1382704888294936649> | No open tickets found to send announcements to."
+                message_text = " | No open tickets found to send announcements to."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(message_text, ephemeral=True)
                 else:
@@ -1993,13 +1993,13 @@ class SupportSystem(commands.Cog):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             announcement_embed = discord.Embed(
-                title="<:megaphone:1382704888294936649> System Announcement",
+                title=" System Announcement",
                 description=f"**Official announcement from {ctx.guild.name} support team:**\n\n{message}",
                 color=0xFF8C00,
                 timestamp=current_time
             )
             announcement_embed.add_field(
-                name="<:clipboard1:1383857546410070117> Announcement Details",
+                name=" Announcement Details",
                 value=f"**Sent by:** {ctx.author.display_name if isinstance(ctx, commands.Context) else ctx.user.display_name}\n"
                       f"**Sent at:** {current_time.strftime('%I:%M %p GMT, %A, %B %d, %Y')}\n"
                       f"**Type:** System-wide notification",
@@ -2023,13 +2023,13 @@ class SupportSystem(commands.Cog):
                     failed_count += 1
 
             result_embed = discord.Embed(
-                title="<:megaphone:1382704888294936649> Announcement Sent",
+                title=" Announcement Sent",
                 description=f"**Your announcement has been delivered to open tickets.**\n\n"
-                           f"**<:stats_1:1382703019334045830> Delivery Summary:**\n"
-                           f"<:j_icons_Correct:1382701297987485706> **Successfully sent:** {success_count} tickets\n"
-                           f"<:icons_Wrong:1382701332955402341> **Failed to send:** {failed_count} tickets\n"
-                           f"<:clipboard1:1383857546410070117> **Total tickets:** {len(tickets)} tickets\n\n"
-                           f"**<:clipboard1:1383857546410070117> Message Preview:**\n*{message[:100]}{'...' if len(message) > 100 else ''}*",
+                           f"** Delivery Summary:**\n"
+                           f" **Successfully sent:** {success_count} tickets\n"
+                           f" **Failed to send:** {failed_count} tickets\n"
+                           f" **Total tickets:** {len(tickets)} tickets\n\n"
+                           f"** Message Preview:**\n*{message[:100]}{'...' if len(message) > 100 else ''}*",
                 color=0x00D4FF,
                 timestamp=current_time
             )
@@ -2063,7 +2063,7 @@ class SupportSystem(commands.Cog):
                 
                 if primary_role and primary_role[0] == role.id:
                     embed = discord.Embed(
-                        title="<:icons_Wrong:1382701332955402341> Cannot Add Primary Role",
+                        title=" Cannot Add Primary Role",
                         description=f"**{role.mention} is already the primary support role.**\n\nUse this command to add additional support roles only.",
                         color=0xFF6B6B
                     )
@@ -2079,7 +2079,7 @@ class SupportSystem(commands.Cog):
                 )
                 if await cur.fetchone():
                     embed = discord.Embed(
-                        title="<:icons_Wrong:1382701332955402341> Role Already Added",
+                        title=" Role Already Added",
                         description=f"**{role.mention} is already an additional support role.**\n\nThis role can already manage tickets.",
                         color=0xFF6B6B
                     )
@@ -2093,7 +2093,7 @@ class SupportSystem(commands.Cog):
             success, message = await add_support_role(self.bot, ctx.guild.id, role.id)
 
             embed = discord.Embed(
-                title="<:j_icons_Correct:1382701297987485706> Support Role Added" if success else "<:icons_Wrong:1382701332955402341> Error",
+                title=" Support Role Added" if success else " Error",
                 description=f"**{role.mention} has been added as an additional support role.**\n\nMembers with this role can now manage tickets." if success else message,
                 color=0x00FF88 if success else 0xFF6B6B,
                 timestamp=discord.utils.utcnow()
@@ -2101,7 +2101,7 @@ class SupportSystem(commands.Cog):
 
             if success:
                 embed.add_field(
-                    name="<:Target:1382706193855942737> Permissions Granted",
+                    name=" Permissions Granted",
                     value="• Claim and transfer tickets\n• Close tickets\n• Change ticket priorities\n• Add/remove users from tickets\n• Rename ticket channels",
                     inline=False
                 )
@@ -2115,7 +2115,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in support_role_add: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> An error occurred: {e}"
+            error_message = f" An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -2136,7 +2136,7 @@ class SupportSystem(commands.Cog):
                 
                 if primary_role and primary_role[0] == role.id:
                     embed = discord.Embed(
-                        title="<:icons_Wrong:1382701332955402341> Cannot Remove Primary Role",
+                        title=" Cannot Remove Primary Role",
                         description=f"**{role.mention} is the primary support role and cannot be removed.**\n\nUse `/setup-tickets` to change the primary support role.",
                         color=0xFF6B6B
                     )
@@ -2150,7 +2150,7 @@ class SupportSystem(commands.Cog):
             success, message = await remove_support_role(self.bot, ctx.guild.id, role.id)
 
             embed = discord.Embed(
-                title="<:j_icons_Correct:1382701297987485706> Support Role Removed" if success else "<:icons_Wrong:1382701332955402341> Error",
+                title=" Support Role Removed" if success else " Error",
                 description=f"**{role.mention} has been removed from additional support roles.**\n\nMembers with this role can no longer manage tickets." if success else message,
                 color=0x00FF88 if success else 0xFF6B6B,
                 timestamp=discord.utils.utcnow()
@@ -2165,7 +2165,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in support_role_remove: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> An error occurred: {e}"
+            error_message = f" An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -2187,7 +2187,7 @@ class SupportSystem(commands.Cog):
             additional_roles = await get_additional_support_roles(self.bot, ctx.guild.id)
 
             embed = discord.Embed(
-                title="<:people_icons:1384040549937451068> Support Roles",
+                title=" Support Roles",
                 description="**All roles that can manage tickets in this server:**",
                 color=0x00D4FF,
                 timestamp=discord.utils.utcnow()
@@ -2199,7 +2199,7 @@ class SupportSystem(commands.Cog):
                 primary_role_text = primary_role.mention if primary_role else f"<@&{primary_role_result[0]}> (Role deleted)"
 
             embed.add_field(
-                name="<:shield:1382703287891136564> Primary Support Role",
+                name=" Primary Support Role",
                 value=primary_role_text,
                 inline=False
             )
@@ -2214,13 +2214,13 @@ class SupportSystem(commands.Cog):
                         additional_role_list.append(f"• <@&{role_id}> (Role deleted)")
 
                 embed.add_field(
-                    name="<:Target:1382706193855942737> Additional Support Roles",
+                    name=" Additional Support Roles",
                     value="\n".join(additional_role_list) if additional_role_list else "None configured",
                     inline=False
                 )
             else:
                 embed.add_field(
-                    name="<:Target:1382706193855942737> Additional Support Roles",
+                    name=" Additional Support Roles",
                     value="None configured",
                     inline=False
                 )
@@ -2229,7 +2229,7 @@ class SupportSystem(commands.Cog):
             total_roles += len(additional_roles)
 
             embed.add_field(
-                name="<:stats_1:1382703019334045830> Summary",
+                name=" Summary",
                 value=f"**Total Support Roles:** {total_roles}\n**Primary Role:** {'✅ Configured' if primary_role_result and primary_role_result[0] else '❌ Not configured'}\n**Additional Roles:** {len(additional_roles)}",
                 inline=False
             )
@@ -2243,7 +2243,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in support_role_list: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> An error occurred: {e}"
+            error_message = f" An error occurred: {e}"
             if isinstance(ctx, discord.Interaction):
                 await ctx.followup.send(error_message, ephemeral=True)
             else:
@@ -2265,9 +2265,9 @@ class SupportSystem(commands.Cog):
 
             if not await is_ticket_channel(self.bot, ctx.channel):
                 embed = discord.Embed(
-                    title="<:icons_Wrong:1382701332955402341> Not a Ticket Channel",
+                    title=" Not a Ticket Channel",
                     description="**This command can only be used in support ticket channels.**\n\n"
-                               "<:Ticket_icons:1382703084815257610> Use this command within an active support ticket to change its priority.",
+                               " Use this command within an active support ticket to change its priority.",
                     color=0xFF6B6B
                 )
                 if isinstance(ctx, discord.Interaction):
@@ -2282,7 +2282,7 @@ class SupportSystem(commands.Cog):
 
             if not (user_has_support or is_admin):
                 embed = discord.Embed(
-                    title="<:icons_locked:1382701901685985361> Permission Denied",
+                    title=" Permission Denied",
                     description="**Only support staff can change ticket priority.**\n\n"
                                "You need to have at least one support role to modify ticket priorities.",
                     color=0xFF6B6B
@@ -2366,7 +2366,7 @@ class SupportSystem(commands.Cog):
                 logger.warning(f"Could not update control menu embed: {edit_error}")
 
             embed = discord.Embed(
-                title=f"<:j_icons_Correct:1382701297987485706> Priority Updated",
+                title=f" Priority Updated",
                 description=f"**{invoker.display_name}** changed this ticket priority to **{priority_emoji} {priority}**.\n\nChannel name and control panel updated with new priority.",
                 color=0x00D4FF,
                 timestamp=datetime.now(timezone.utc)
@@ -2380,7 +2380,7 @@ class SupportSystem(commands.Cog):
         except Exception as e:
             logger.error(f"Error in priority command: {e}")
             error_embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Error",
+                title=" Error",
                 description=f"Failed to set priority: {str(e)}",
                 color=0xFF6B6B
             )
@@ -2405,7 +2405,7 @@ class SupportSystem(commands.Cog):
             is_ticket_channel = await is_ticket_channel(self.bot, ctx.channel)
 
             if not (user_has_support or is_ticket_channel):
-                error_message = "<:icons_Wrong:1382701332955402341> | You can only set reminders in ticket channels or if you have the support role."
+                error_message = " | You can only set reminders in ticket channels or if you have the support role."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(error_message, ephemeral=True)
                 else:
@@ -2417,7 +2417,7 @@ class SupportSystem(commands.Cog):
             match = re.match(time_pattern, time.lower())
 
             if not match:
-                error_message = "<:icons_Wrong:1382701332955402341> | Invalid time format. Use: 5m (minutes), 1h (hours), 2d (days)"
+                error_message = " | Invalid time format. Use: 5m (minutes), 1h (hours), 2d (days)"
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(error_message, ephemeral=True)
                 else:
@@ -2431,7 +2431,7 @@ class SupportSystem(commands.Cog):
             delay_seconds = amount * multipliers[unit]
 
             if delay_seconds < 60:  # Minimum 1 minute
-                error_message = "<:icons_Wrong:1382701332955402341> | Reminder time must be at least 1 minute."
+                error_message = " | Reminder time must be at least 1 minute."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(error_message, ephemeral=True)
                 else:
@@ -2439,7 +2439,7 @@ class SupportSystem(commands.Cog):
                 return
 
             if delay_seconds > 604800:  # Maximum 7 days
-                error_message = "<:icons_Wrong:1382701332955402341> | Reminder time cannot exceed 7 days."
+                error_message = " | Reminder time cannot exceed 7 days."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(error_message, ephemeral=True)
                 else:
@@ -2447,22 +2447,22 @@ class SupportSystem(commands.Cog):
                 return
 
             if not message:
-                message = "<:icons_clock:1382701751206936697> **Reminder:** This is your scheduled follow-up reminder."
+                message = " **Reminder:** This is your scheduled follow-up reminder."
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             remind_time = current_time + timedelta(seconds=delay_seconds)
 
             time_units = {'m': 'minutes', 'h': 'hours', 'd': 'days'}
             embed = discord.Embed(
-                title="<:icons_clock:1382701751206936697> Advanced Reminder Set",
+                title=" Advanced Reminder Set",
                 description=f"**Your reminder has been scheduled successfully!**\n\n"
-                           f"<:Icons_calender:1382703729504948265> **Reminder Details:**\n"
-                           f"<:icons_clock:1382701751206936697> **Trigger Time:** {discord.utils.format_dt(remind_time, 'F')}\n"
+                           f" **Reminder Details:**\n"
+                           f" **Trigger Time:** {discord.utils.format_dt(remind_time, 'F')}\n"
                            f"📍 **In:** {amount} {time_units[unit]}\n"
                            f"📍 **Relative:** {discord.utils.format_dt(remind_time, 'R')}\n"
-                           f"<:clipboard1:1383857546410070117> **Channel:** {ctx.channel.mention}\n"
-                           f"<:icons_Person:1382703571056853082> **Set by:** {ctx.author.mention if isinstance(ctx, commands.Context) else ctx.user.mention}\n\n"
-                           f"<:type_icons:1384042158801027136> **Reminder Message:**\n*{message}*",
+                           f" **Channel:** {ctx.channel.mention}\n"
+                           f" **Set by:** {ctx.author.mention if isinstance(ctx, commands.Context) else ctx.user.mention}\n\n"
+                           f" **Reminder Message:**\n*{message}*",
                 color=0x00D4FF,
                 timestamp=current_time
             )
@@ -2476,13 +2476,13 @@ class SupportSystem(commands.Cog):
             await asyncio.sleep(delay_seconds)
 
             reminder_embed = discord.Embed(
-                title="<:icons_clock:1382701751206936697> Scheduled Reminder",
+                title=" Scheduled Reminder",
                 description=f"**This is your scheduled reminder!**\n\n"
-                           f"<:clipboard1:1383857546410070117> **Message:** {message}\n\n"
-                           f"<:clipboard1:1383857546410070117> **Reminder Details:**\n"
-                           f"<:icons_Person:1382703571056853082> **Set by:** {ctx.author.mention if isinstance(ctx, commands.Context) else ctx.user.mention}\n"
-                           f"<:icons_clock:1382701751206936697> **Set at:** {discord.utils.format_dt(current_time, 'F')}\n"
-                           f"<:icons_clock:1382701751206936697> **Triggered after:** {amount} {time_units[unit]}\n"
+                           f" **Message:** {message}\n\n"
+                           f" **Reminder Details:**\n"
+                           f" **Set by:** {ctx.author.mention if isinstance(ctx, commands.Context) else ctx.user.mention}\n"
+                           f" **Set at:** {discord.utils.format_dt(current_time, 'F')}\n"
+                           f" **Triggered after:** {amount} {time_units[unit]}\n"
                            f"📍 **Channel:** {ctx.channel.mention}",
                 color=0xFF8C00,
                 timestamp=discord.utils.utcnow()
@@ -2500,7 +2500,7 @@ class SupportSystem(commands.Cog):
 
         except Exception as e:
             logger.error(f"Error in remind: {e}")
-            error_message = f"<:icons_Wrong:1382701332955402341> | An error occurred: {str(e)}"
+            error_message = f" | An error occurred: {str(e)}"
             
             try:
                 if isinstance(ctx, discord.Interaction):
@@ -2524,31 +2524,31 @@ class FAQCategoryView(discord.ui.View):
             discord.SelectOption(
                 label="Getting Started",
                 value="getting_started",
-                emoji="<:Ticket_icons:1382703084815257610>",
+                emoji="",
                 description="Creating tickets, basics & first steps"
             ),
             discord.SelectOption(
                 label="Response & Priority",
                 value="response_priority",
-                emoji="<:icons_clock:1382701751206936697>",
+                emoji="",
                 description="Response times, priority levels & urgency"
             ),
             discord.SelectOption(
                 label="Ticket Management",
                 value="ticket_management",
-                emoji="<:Target:1382706193855942737>",
+                emoji="",
                 description="Managing tickets, closing & user access"
             ),
             discord.SelectOption(
                 label="Features & Settings",
                 value="features_settings",
-                emoji="<:clipboard1:1383857546410070117>",
+                emoji="",
                 description="Transcripts, limits, ratings & features"
             ),
             discord.SelectOption(
                 label="Troubleshooting",
                 value="troubleshooting",
-                emoji="<:icons_wrench:1382702984940617738>",
+                emoji="",
                 description="Common issues, solutions & fixes"
             )
         ]
@@ -2560,14 +2560,14 @@ class FAQCategoryView(discord.ui.View):
 
             if category == "getting_started":
                 embed = discord.Embed(
-                    title="<:Ticket_icons:1382703084815257610> Getting Started with Support Tickets",
+                    title=" Getting Started with Support Tickets",
                     description="Everything you need to know about creating and using support tickets.",
                     color=0x00FF88,
                     timestamp=current_time
                 )
 
                 embed.add_field(
-                    name="<:UA_Rocket_icons:1382701592851124254> **How do I create a ticket?**",
+                    name=" **How do I create a ticket?**",
                     value="• Look for the support panel in your server\n"
                           "• Click the dropdown or button for your issue type\n"
                           "• Fill out the ticket creation form\n"
@@ -2577,7 +2577,7 @@ class FAQCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:j_icons_Correct:1382701297987485706> **What happens after I create a ticket?**",
+                    name=" **What happens after I create a ticket?**",
                     value="• A private channel is created just for you\n"
                           "• Only you and support staff can see it\n"
                           "• You'll receive a confirmation message\n"
@@ -2587,25 +2587,25 @@ class FAQCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:lightbulb:1382701619753386035> **Pro Tips for New Users**",
+                    name=" **Pro Tips for New Users**",
                     value="• Be clear and detailed in your ticket description\n"
                           "• Choose the right category for faster help\n"
                           "• Set appropriate priority level\n"
                           "• Stay in your ticket channel for updates\n"
-                          "• Rate your experience when done! <:j_icons_Correct:1382701297987485706>",
+                          "• Rate your experience when done! ",
                     inline=False
                 )
 
             elif category == "response_priority":
                 embed = discord.Embed(
-                    title="<:icons_clock:1382701751206936697> Response Times & Priority Levels",
+                    title=" Response Times & Priority Levels",
                     description="Understanding how we prioritize and respond to tickets.",
                     color=0xFFAA00,
                     timestamp=current_time
                 )
 
                 embed.add_field(
-                    name="<a:lighting_icons:1383871485122449409> **Priority Levels Explained**",
+                    name=" **Priority Levels Explained**",
                     value="**🟢 Low** - General questions, non-urgent issues\n"
                           "**🟡 Medium** - Standard support requests (default)\n"
                           "**🟠 High** - Important issues affecting functionality\n"
@@ -2614,7 +2614,7 @@ class FAQCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:icons_clock:1382701751206936697> **Expected Response Times**",
+                    name=" **Expected Response Times**",
                     value="**🟢 Low Priority:** 12-24 hours\n"
                           "**🟡 Medium Priority:** 4-12 hours\n"
                           "**🟠 High Priority:** 1-4 hours\n"
@@ -2624,7 +2624,7 @@ class FAQCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:Target:1382706193855942737> **How to Choose Priority**",
+                    name=" **How to Choose Priority**",
                     value="• **Critical**: Server down, security breach, data loss\n"
                           "• **High**: Features broken, unable to use service\n"
                           "• **Medium**: General issues, questions, minor bugs\n"
@@ -2634,14 +2634,14 @@ class FAQCategoryView(discord.ui.View):
 
             elif category == "ticket_management":
                 embed = discord.Embed(
-                    title="<:Target:1382706193855942737> Ticket Management Guide",
+                    title=" Ticket Management Guide",
                     description="Learn how to manage your tickets effectively.",
                     color=0x9932CC,
                     timestamp=current_time
                 )
 
                 embed.add_field(
-                    name="<:j_icons_Correct:1382701297987485706> **Managing Your Tickets**",
+                    name=" **Managing Your Tickets**",
                     value="• **View ticket info** - Use `/ticket-info` command\n"
                           "• **Add users** - Use `/add-user @username`\n"
                           "• **Rename ticket** - Use `/rename New Name Here`\n"
@@ -2651,7 +2651,7 @@ class FAQCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:icons_clock:1382701751206936697> **Ticket Limits & Rules**",
+                    name=" **Ticket Limits & Rules**",
                     value="• Each user can have multiple open tickets (server limit)\n"
                           "• Tickets auto-close after extended inactivity\n"
                           "• Rate limiting prevents ticket spam\n"
@@ -2661,7 +2661,7 @@ class FAQCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:lightbulb:1382701619753386035> **Best Practices**",
+                    name=" **Best Practices**",
                     value="• Keep conversations in your ticket channel\n"
                           "• Provide screenshots or files when helpful\n"
                           "• Update your ticket if situation changes\n"
@@ -2672,14 +2672,14 @@ class FAQCategoryView(discord.ui.View):
 
             elif category == "features_settings":
                 embed = discord.Embed(
-                    title="<:clipboard1:1383857546410070117> Features & Settings",
+                    title=" Features & Settings",
                     description="Discover all the powerful features available.",
                     color=0x5865F2,
                     timestamp=current_time
                 )
 
                 embed.add_field(
-                    name="<:clipboard1:1383857546410070117> **Transcript System**",
+                    name=" **Transcript System**",
                     value="• Full conversation logs saved automatically\n"
                           "• Sent to your DMs when ticket closes\n"
                           "• Includes all messages, files, and embeds\n"
@@ -2689,7 +2689,7 @@ class FAQCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:icons_star:1382705271591272471> **Rating System**",
+                    name=" **Rating System**",
                     value="• Rate your support experience (1-5 stars)\n"
                           "• Provide feedback to help us improve\n"
                           "• Helps train our support team\n"
@@ -2699,7 +2699,7 @@ class FAQCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:Target:1382706193855942737> **Advanced Features**",
+                    name=" **Advanced Features**",
                     value="• **Categories** - Organized support types\n"
                           "• **Staff Assignment** - Claim and transfer tickets\n"
                           "• **User Management** - Add/remove ticket participants\n"
@@ -2710,14 +2710,14 @@ class FAQCategoryView(discord.ui.View):
 
             elif category == "troubleshooting":
                 embed = discord.Embed(
-                    title="<:icons_wrench:1382702984940617738> Troubleshooting Common Issues",
+                    title=" Troubleshooting Common Issues",
                     description="Solutions to frequently encountered problems.",
                     color=0xFF0000,
                     timestamp=current_time
                 )
 
                 embed.add_field(
-                    name="<:icons_Wrong:1382701332955402341> **Common Problems & Solutions**",
+                    name=" **Common Problems & Solutions**",
                     value="• **Can't create ticket:** Check if you've reached the limit\n"
                           "• **No response:** Verify correct priority and wait time\n"
                           "• **Can't see transcript:** Check your DM privacy settings\n"
@@ -2727,7 +2727,7 @@ class FAQCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:icons_wrench:1382702984940617738> **Quick Fixes**",
+                    name=" **Quick Fixes**",
                     value="• **Refresh Discord** - Close and reopen the app\n"
                           "• **Clear Cache** - Clear Discord's cache and restart\n"
                           "• **Check Permissions** - Verify bot has required permissions\n"
@@ -2741,16 +2741,16 @@ class FAQCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:UA_Rocket_icons:1382701592851124254> **Still need help?**",
+                    name=" **Still need help?**",
                     value="Can't find what you're looking for?\n"
                           "• Create a ticket for personalized assistance\n"
                           "• Our expert support team is here to help\n"
                           "• We're committed to resolving your issues\n"
-                          "•  service guaranteed! <:j_icons_Correct:1382701297987485706>",
+                          "•  service guaranteed! ",
                     inline=False
                 )
 
-            embed.set_footer(text=f"CodeX Development • {category.replace('_', ' ').title()} FAQ")
+            embed.set_footer(text=f"Space Development • {category.replace('_', ' ').title()} FAQ")
 
             view = FAQCategoryView(self.bot)
             await interaction.response.edit_message(embed=embed, view=view)
@@ -2759,12 +2759,12 @@ class FAQCategoryView(discord.ui.View):
             logger.error(f"Error in FAQ category select: {e}")
             if not interaction.response.is_done():
                 await interaction.response.send_message(
-                    f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}",
+                    f" | An error occurred: {e}",
                     ephemeral=True
                 )
             else:
                 await interaction.followup.send(
-                    f"<:icons_Wrong:1382701332955402341> | An error occurred: {e}",
+                    f" | An error occurred: {e}",
                     ephemeral=True
                 )
 
