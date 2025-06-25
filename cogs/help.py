@@ -27,37 +27,37 @@ class HelpSystem(commands.Cog):
             current_time = datetime.now(timezone.utc)
 
             embed = discord.Embed(
-                title="<:icons_help:1382704281945112645> Support Bot Help Center",
+                title=" Support Bot Help Center",
                 description=f"Welcome to {self.bot.user.name} - your  support system! Select a category below to get detailed information about features and commands.",
                 color=0x00D4FF,
                 timestamp=current_time
             )
 
             embed.add_field(
-                name="<:icons_wrench:1382702984940617738> Need Setup Help?",
+                name=" Need Setup Help?",
                 value="Select 'Setup Guide' from the dropdown for a complete walkthrough of configuring your support system.",
                 inline=False
             )
 
             embed.add_field(
-                name="<:Ticket_icons:1382703084815257610> Managing Tickets?",
+                name=" Managing Tickets?",
                 value="Choose 'Ticket Commands' to learn about all ticket management features and commands.",
                 inline=False
             )
 
             embed.add_field(
-                name="<:UA_Rocket_icons:1382701592851124254> Quick Start",
+                name=" Quick Start",
                 value="New to the bot? Start with our Quick Start guide to get up and running in minutes!",
                 inline=False
             )
 
             embed.add_field(
                 name="🆘 **Need Additional Help?**",
-                value=f"Join our support server for 24/7 assistance:\n[**CodeX Development Server**](https://discord.gg/codexdev)\n\n• Expert help from our team\n• Community discussions\n• Feature requests & feedback\n\nDeveloped by `CodeX Development Team and `Aegis`",
+                value=f"Join our support server for 24/7 assistance:\n[**SPACE ADMIN**](https://discord.gg/exploiter)\n\n• Expert help from our team\n• Community discussions\n• Feature requests & feedback\n\nDeveloped by `CodeX Development Team and `Aegis`",
                 inline=False
             )
 
-            embed.set_footer(text=f"{self.bot.user.name}  Support System • Built by CodeX Development • Select Category Below")
+            embed.set_footer(text=f"{self.bot.user.name}  Support System • Built by Space Admin • Select Category Below")
             embed.set_thumbnail(url=self.bot.user.display_avatar.url)
 
             help_view = HelpCategoryView(self.bot, invoker.id)
@@ -85,14 +85,14 @@ class HelpSystem(commands.Cog):
             current_time = datetime.now(timezone.utc)
 
             embed = discord.Embed(
-                title=f"<:icons_help:1382704281945112645> {self.bot.user.name} Information",
+                title=f" {self.bot.user.name} Information",
                 description="Detailed information about this bot.",
                 color=0x00D4FF,
                 timestamp=current_time
             )
 
             embed.add_field(
-                name="<:stats_1:1382703019334045830> **General Information**",
+                name=" **General Information**",
                 value=f"• **Bot Name:** {self.bot.user.name}\n"
                       f"• **Bot ID:** {self.bot.user.id}\n"
                       f"• **Created At:** {utc_to_gmt(self.bot.user.created_at).strftime('%Y-%m-%d %H:%M:%S GMT')}",
@@ -100,7 +100,7 @@ class HelpSystem(commands.Cog):
             )
 
             embed.add_field(
-                name="<:clipboard1:1383857546410070117> **Technical Details**",
+                name=" **Technical Details**",
                 value=f"• **Discord.py Version:** {discord.__version__}\n"
                       f"• **Python Version:** {__import__('platform').python_version()}\n"
                       f"• **Total Servers:** {len(self.bot.guilds)}",
@@ -130,88 +130,88 @@ class HelpSystem(commands.Cog):
 
             if latency < 50:
                 status_text = "Excellent"
-                status_emoji = "<a:green_circle2:1382704526057930794>"
+                status_emoji = ""
                 color = 0x00FF88
-                description = f"<:UA_Rocket_icons:1382701592851124254> **Lightning Fast!** - {latency}ms response time"
+                description = f" **Lightning Fast!** - {latency}ms response time"
             elif latency < 100:
                 status_text = "Very Good"
-                status_emoji = "<a:green_circle2:1382704526057930794>"
+                status_emoji = ""
                 color = 0x00D4FF
-                description = f"<:Rise:1382704106808016917> **Excellent Performance** - {latency}ms response time"
+                description = f" **Excellent Performance** - {latency}ms response time"
             elif latency < 150:
                 status_text = "Good"
-                status_emoji = "<:Yellow_circle:1382704571377258559>"
+                status_emoji = ""
                 color = 0xFFAA00
-                description = f"<:icons_wrench:1382702984940617738> **Stable Connection** - {latency}ms response time"
+                description = f" **Stable Connection** - {latency}ms response time"
             elif latency < 250:
                 status_text = "Fair"
-                status_emoji = "<:Yellow_circle:1382704571377258559>"
+                status_emoji = ""
                 color = 0xFF8C00
-                description = f"<:Target:1382706193855942737> **Moderate Delays** - {latency}ms response time"
+                description = f" **Moderate Delays** - {latency}ms response time"
             else:
                 status_text = "Poor"
-                status_emoji = "<:icons_Wrong:1382701332955402341>"
+                status_emoji = ""
                 color = 0xFF6B6B
-                description = f"<:icons_Wrong:1382701332955402341> **High Latency Detected** - {latency}ms response time"
+                description = f" **High Latency Detected** - {latency}ms response time"
 
             embed = discord.Embed(
-                title="<:stats_1:1382703019334045830> Real-Time Connection Status",
+                title=" Real-Time Connection Status",
                 description=description,
                 color=color,
                 timestamp=datetime.now(timezone.utc)
             )
 
             embed.add_field(
-                name="<:icons_refresh:1382701477759549523> **Ping Latency**",
+                name=" **Ping Latency**",
                 value=f"```{latency}ms```",
                 inline=True
             )
 
             embed.add_field(
-                name="<:Rise:1382704106808016917> **Connection Quality**",
+                name=" **Connection Quality**",
                 value=f"{status_emoji} **{status_text}**",
                 inline=True
             )
 
             embed.add_field(
-                name="<:robot:1382702105722228824> **WebSocket Status**",
-                value="<a:green_circle2:1382704526057930794> **Online**",
+                name=" **WebSocket Status**",
+                value=" **Online**",
                 inline=True
             )
 
             if latency < 50:
                 embed.add_field(
-                    name="<:UA_Rocket_icons:1382701592851124254> **Performance Analysis**",
+                    name=" **Performance Analysis**",
                     value="Perfect for gaming and real-time applications!",
                     inline=False
                 )
             elif latency < 100:
                 embed.add_field(
-                    name="<:Rise:1382704106808016917> **Performance Analysis**",
+                    name=" **Performance Analysis**",
                     value="Excellent for all Discord operations",
                     inline=False
                 )
             elif latency < 150:
                 embed.add_field(
-                    name="<:icons_wrench:1382702984940617738> **Performance Analysis**",
+                    name=" **Performance Analysis**",
                     value="Good for normal Discord usage",
                     inline=False
                 )
             elif latency < 250:
                 embed.add_field(
-                    name="<:Target:1382706193855942737> **Performance Analysis**",
+                    name=" **Performance Analysis**",
                     value="May notice slight delays in responses",
                     inline=False
                 )
             else:
                 embed.add_field(
-                    name="<:icons_Wrong:1382701332955402341> **Performance Analysis**",
+                    name=" **Performance Analysis**",
                     value="Experiencing significant delays - check connection",
                     inline=False
                 )
 
             embed.add_field(
-                name="<:icons_clock:1382701751206936697> **Response Time Details**",
+                name=" **Response Time Details**",
                 value=f"• **API Latency:** {latency}ms\n• **WebSocket:** Connected\n• **Status:** {status_text}",
                 inline=False
             )
@@ -238,7 +238,7 @@ class HelpSystem(commands.Cog):
 
 
             embed = discord.Embed(
-                title="<:stats_1:1382703019334045830> Server Statistics & Bot Performance",
+                title=" Server Statistics & Bot Performance",
                 description="Real-time server analytics and bot performance metrics.",
                 color=0x00D4FF,
                 timestamp=current_time
@@ -246,7 +246,7 @@ class HelpSystem(commands.Cog):
 
             guild = ctx.guild
             embed.add_field(
-                name="<:icons_help:1382704281945112645> **Server Information**",
+                name=" **Server Information**",
                 value=f"• **Server Name:** {guild.name}\n"
                       f"• **Server ID:** {guild.id}\n"
                       f"• **Created:** {guild.created_at.strftime('%Y-%m-%d')}\n"
@@ -256,7 +256,7 @@ class HelpSystem(commands.Cog):
             )
 
             embed.add_field(
-                name="<:UA_Rocket_icons:1382701592851124254> **Bot Performance**",
+                name=" **Bot Performance**",
                 value=f"• **Latency:** {round(self.bot.latency * 1000)}ms\n"
                       f"• **Guilds:** {len(self.bot.guilds):,}\n"
                       f"• **Users:** {len(self.bot.users):,}\n"
@@ -265,7 +265,7 @@ class HelpSystem(commands.Cog):
             )
 
             embed.add_field(
-                name="<:Rise:1382704106808016917> **Member Statistics**",
+                name=" **Member Statistics**",
                 value=f"• **Total Members:** {guild.member_count:,}\n"
                       f"• **Online Members:** {len([m for m in guild.members if m.status != discord.Status.offline]):,}\n"
                       f"• **Bots:** {len([m for m in guild.members if m.bot]):,}\n"
@@ -274,7 +274,7 @@ class HelpSystem(commands.Cog):
             )
 
             embed.add_field(
-                name="<:Ticket_icons:1382703084815257610> **Channel Statistics**",
+                name=" **Channel Statistics**",
                 value=f"• **Text Channels:** {len(guild.text_channels)}\n"
                       f"• **Voice Channels:** {len(guild.voice_channels)}\n"
                       f"• **Categories:** {len(guild.categories)}\n"
@@ -308,31 +308,31 @@ class HelpCategoryView(discord.ui.View):
             discord.SelectOption(
                 label="Setup Guide",
                 value="setup",
-                emoji="<:icons_wrench:1382702984940617738>",
+                emoji="",
                 description="Complete setup walkthrough"
             ),
             discord.SelectOption(
                 label="Ticket Commands",
                 value="tickets",
-                emoji="<:Ticket_icons:1382703084815257610>",
+                emoji="",
                 description="All ticket management commands"
             ),
             discord.SelectOption(
                 label="Admin Commands",
                 value="admin",
-                emoji="<:shield:1382703287891136564>",
+                emoji="",
                 description="Administrator commands & features"
             ),
             discord.SelectOption(
                 label="Trigger Commands",
                 value="triggers",
-                emoji="<:features_icons:1383850989722796053>",
+                emoji="",
                 description="Keyword triggers & auto-responses"
             ),
             discord.SelectOption(
                 label="General Commands",
                 value="general",
-                emoji="<:icons_help:1382704281945112645>",
+                emoji="",
                 description="General bot commands & info"
             )
         ]
@@ -344,21 +344,21 @@ class HelpCategoryView(discord.ui.View):
 
             if category == "setup":
                 embed = discord.Embed(
-                    title="<:icons_wrench:1382702984940617738> Setup Guide",
+                    title=" Setup Guide",
                     description="Complete guide to setting up your support system.",
                     color=0x00D4FF,
                     timestamp=current_time
                 )
 
                 embed.add_field(
-                    name="<:UA_Rocket_icons:1382701592851124254> **Quick Setup**",
+                    name=" **Quick Setup**",
                     value="`setup-tickets` - Launch the complete setup wizard\n"
                           "This command will guide you through configuring categories, roles, and channels.",
                     inline=False
                 )
 
                 embed.add_field(
-                    name="<:clipboard1:1383857546410070117> **Category Management**",
+                    name=" **Category Management**",
                     value="`add-category <name>` - Add a new support category\n"
                           "`remove-category <name>` - Remove an existing category\n"
                           "`list-categories` - View all configured categories",
@@ -366,7 +366,7 @@ class HelpCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:Target:1382706193855942737> **Panel Deployment**",
+                    name=" **Panel Deployment**",
                     value="`send-panel dropdown` - Send panel with dropdown menu\n"
                           "`send-panel button` - Send panel with individual buttons",
                     inline=False
@@ -374,14 +374,14 @@ class HelpCategoryView(discord.ui.View):
 
             elif category == "tickets":
                 embed = discord.Embed(
-                    title="<:Ticket_icons:1382703084815257610> Ticket Commands",
+                    title=" Ticket Commands",
                     description="All commands for managing support tickets.",
                     color=0x00D4FF,
                     timestamp=current_time
                 )
 
                 embed.add_field(
-                    name="<:Target:1382706193855942737> **Ticket Management**",
+                    name=" **Ticket Management**",
                     value="`close-ticket` - Close the current ticket with transcript\n"
                           "`claim-ticket` - Claim a ticket for support\n"
                           "`transfer-ticket @user` - Transfer ticket to another staff member\n"
@@ -393,14 +393,14 @@ class HelpCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:icons_clock:1382701751206936697> **Priority & Status**",
+                    name=" **Priority & Status**",
                     value="`priority <level>` - Set ticket priority (low/medium/high/critical)\n"
                           "`claim` - Claim a ticket for support handling",
                     inline=False
                 )
 
                 embed.add_field(
-                    name="<:lightbulb:1382701619753386035> **User Features**",
+                    name=" **User Features**",
                     value="• Create tickets using the support panel\n"
                           "• Rate your support experience when ticket closes\n"
                           "• Receive automatic transcripts in DMs",
@@ -409,14 +409,14 @@ class HelpCategoryView(discord.ui.View):
 
             elif category == "admin":
                 embed = discord.Embed(
-                    title="<:shield:1382703287891136564> Admin Commands",
+                    title=" Admin Commands",
                     description="Administrator commands and features.",
                     color=0x00D4FF,
                     timestamp=current_time
                 )
 
                 embed.add_field(
-                    name="<:icons_wrench:1382702984940617738> **System Setup**",
+                    name=" **System Setup**",
                     value="`setup-tickets` - Configure the entire support system\n"
                           "`send-panel <type>` - Deploy support panels\n"
                           "`reset-categories` - Reset all categories to default",
@@ -424,7 +424,7 @@ class HelpCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:people_icons:1384040549937451068> **Support Role Management**",
+                    name=" **Support Role Management**",
                     value="`support-role-add @role` - Add additional support role\n"
                           "`support-role-remove @role` - Remove additional support role\n"
                           "`support-role-list` - List all support roles",
@@ -432,27 +432,27 @@ class HelpCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:stats_1:1382703019334045830> **Analytics & Stats**",
+                    name=" **Analytics & Stats**",
                     value="`stats` - View comprehensive server statistics",
                     inline=False
                 )
 
                 embed.add_field(
-                    name="<:shield:1382703287891136564> **Permissions Required**",
+                    name=" **Permissions Required**",
                     value="Most admin commands require **Administrator** permission or designated **Support Staff** role.",
                     inline=False
                 )
 
             elif category == "triggers":
                 embed = discord.Embed(
-                    title="<:features_icons:1383850989722796053> Trigger Commands",
+                    title=" Trigger Commands",
                     description="Manage keyword triggers and automatic responses.",
                     color=0x00D4FF,
                     timestamp=current_time
                 )
 
                 embed.add_field(
-                    name="<:icons_wrench:1382702984940617738> **Trigger Management**",
+                    name=" **Trigger Management**",
                     value="`add-trigger <keyword> <message>` - Create a new keyword trigger\n"
                           "`remove-trigger <keyword>` - Remove an existing trigger\n"
                           "`trigger-get <keyword>` - View trigger response message",
@@ -460,7 +460,7 @@ class HelpCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:clipboard1:1383857546410070117> **Trigger Information**",
+                    name=" **Trigger Information**",
                     value="`list-triggers` - View all triggers in this server\n"
                           "• Triggers respond automatically when keywords are detected\n"
                           "• Keywords are case-insensitive and match partial text",
@@ -468,21 +468,21 @@ class HelpCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:shield:1382703287891136564> **Permissions Required**",
+                    name=" **Permissions Required**",
                     value="• `add-trigger` and `remove-trigger` require **Administrator** permission\n• `trigger-get` and `list-triggers` can be used by anyone",
                     inline=False
                 )
 
             else:  # general
                 embed = discord.Embed(
-                    title="<:icons_help:1382704281945112645> General Commands",
+                    title=" General Commands",
                     description="General bot commands and information.",
                     color=0x00D4FF,
                     timestamp=current_time
                 )
 
                 embed.add_field(
-                    name="<:stats_1:1382703019334045830> **Bot Information**",
+                    name=" **Bot Information**",
                     value="`ping` - Check bot latency and status\n"
                           "`botinfo` - View detailed bot information\n"
                           "`help` - Display this help menu",
@@ -490,15 +490,15 @@ class HelpCategoryView(discord.ui.View):
                 )
 
                 embed.add_field(
-                    name="<:icons_help:1382704281945112645> **Support Resources**",
+                    name=" **Support Resources**",
                     value="`faq` - Frequently asked questions\n"
                           "`stats` - Server statistics (if you have permissions)",
                     inline=False
                 )
 
                 embed.add_field(
-                    name="<:UA_Rocket_icons:1382701592851124254> **Need More Help?**",
-                    value="Join our support server: [CodeX Development](https://discord.gg/codexdev)\n"
+                    name=" **Need More Help?**",
+                    value="Join our support server: [Space Admin](https://discord.gg/exploiter)\n"
                           "Create a support ticket using the panel for personalized assistance!",
                     inline=False
                 )
