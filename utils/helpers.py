@@ -111,12 +111,12 @@ async def generate_transcript(channel) -> Tuple[str, io.StringIO]:
 
 def format_priority_emoji(priority: str) -> str:
     priority_emojis = {
-        "Low": "<a:green_circle2:1382704526057930794>",
-        "Medium": "<:Yellow_circle:1382704571377258559>", 
-        "High": "<:icons_fire:1382705739960684706>",
-        "Critical": "<:icons_Wrong:1382701332955402341>"
+        "Low": "",
+        "Medium": "", 
+        "High": "",
+        "Critical": ""
     }
-    return priority_emojis.get(priority, "<:Yellow_circle:1382704571377258559>")
+    return priority_emojis.get(priority, "")
 
 def get_priority_color(priority: str) -> int:
     priority_colors = {
@@ -138,12 +138,12 @@ def get_priority_emoji(priority: str) -> str:
 
 def get_status_emoji(status: str) -> str:
     status_emojis = {
-        "open": "<a:green_circle2:1382704526057930794>",
-        "closed": "<:icons_Wrong:1382701332955402341>",
-        "locked": "<:icons_locked:1382701901685985361>",
-        "claimed": "<:welcome:1382706419765350480>"
+        "open": "",
+        "closed": "",
+        "locked": "",
+        "claimed": ""
     }
-    return status_emojis.get(status, "<:icons_help:1382704281945112645>")
+    return status_emojis.get(status, "")
 
 def sanitize_channel_name(name: str) -> str:
     name = re.sub(r'[^a-zA-Z0-9\-_]', '-', name.lower())
@@ -157,7 +157,7 @@ async def send_transcript_dm(user, channel_name, transcript_file):
         file = discord.File(transcript_file, filename=f"{channel_name}-transcript.txt")
 
         transcript_embed = discord.Embed(
-            title="<:clipboard1:1383857546410070117> Ticket Transcript",
+            title=" Ticket Transcript",
             description=f"**Complete conversation log for your support ticket.**\n\n"
                        f"This transcript contains all messages, files, and interactions from your support session. "
                        f"Keep this for your records or future reference.\n\n"
@@ -216,7 +216,7 @@ def format_role_mention(role_id: int) -> str:
 
 async def send_error_embed(interaction_or_ctx, title: str, description: str):
     embed = discord.Embed(
-        title=f"<:icons_Wrong:1382701332955402341> {title}",
+        title=f" {title}",
         description=description,
         color=0xFF6B6B
     )
@@ -234,7 +234,7 @@ async def send_error_embed(interaction_or_ctx, title: str, description: str):
 
 async def send_success_embed(interaction_or_ctx, title: str, description: str):
     embed = discord.Embed(
-        title=f"<:j_icons_Correct:1382701297987485706> {title}",
+        title=f" {title}",
         description=description,
         color=0x00D4FF
     )
@@ -303,12 +303,12 @@ async def create_ticket_channel(bot, guild, creator, category, subject, descript
             await bot.db.commit()
 
         embed = discord.Embed(
-            title=f"<:Ticket_icons:1382703084815257610> Ticket #{ticket_number:04d}",
+            title=f" Ticket #{ticket_number:04d}",
             description=f"**Category:** {category}\n**Subject:** {subject}\n**Description:** {description}",
             color=0x00D4FF
         )
         embed.add_field(name="Creator", value=creator.mention, inline=True)
-        embed.add_field(name="Status", value="<a:green_circle2:1382704526057930794> Open", inline=True)
+        embed.add_field(name="Status", value=" Open", inline=True)
         embed.set_footer(text="Our team will be with you shortly!")
 
         ping_text = ""
