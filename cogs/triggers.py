@@ -58,7 +58,7 @@ class TriggerSystem(commands.Cog):
                 await self.setup_triggers_database()
 
             if not self.triggers_db:
-                error_msg = "<:icons_Wrong:1382701332955402341> | Database connection failed. Please try again later."
+                error_msg = " | Database connection failed. Please try again later."
                 if is_interaction:
                     await ctx.followup.send(error_msg, ephemeral=True)
                 else:
@@ -66,7 +66,7 @@ class TriggerSystem(commands.Cog):
                 return
 
             if len(keyword) > 50:
-                error_msg = "<:icons_Wrong:1382701332955402341> | Keyword cannot exceed 50 characters."
+                error_msg = " | Keyword cannot exceed 50 characters."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(error_msg, ephemeral=True)
                 else:
@@ -74,7 +74,7 @@ class TriggerSystem(commands.Cog):
                 return
 
             if len(message) > 2000:
-                error_msg = "<:icons_Wrong:1382701332955402341> | Response message cannot exceed 2000 characters."
+                error_msg = " | Response message cannot exceed 2000 characters."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(error_msg, ephemeral=True)
                 else:
@@ -93,7 +93,7 @@ class TriggerSystem(commands.Cog):
                     await self.triggers_db.commit()
 
                     embed = discord.Embed(
-                        title="<:j_icons_Correct:1382701297987485706> Trigger Added Successfully",
+                        title=" Trigger Added Successfully",
                         description=f"**Keyword:** `{keyword}`\n**Response:** {message[:100]}{'...' if len(message) > 100 else ''}",
                         color=0x00D4FF
                     )
@@ -105,7 +105,7 @@ class TriggerSystem(commands.Cog):
                         await ctx.send(embed=embed)
 
                 except aiosqlite.IntegrityError:
-                    error_msg = f"<:icons_Wrong:1382701332955402341> | A trigger for keyword `{keyword}` already exists in this server."
+                    error_msg = f" | A trigger for keyword `{keyword}` already exists in this server."
                     if isinstance(ctx, discord.Interaction):
                         await ctx.followup.send(error_msg, ephemeral=True)
                     else:
@@ -137,9 +137,9 @@ class TriggerSystem(commands.Cog):
 
                 if cur.rowcount > 0:
                     await self.triggers_db.commit()
-                    success_msg = f"<:j_icons_Correct:1382701297987485706> | Trigger for keyword `{keyword}` has been removed."
+                    success_msg = f" | Trigger for keyword `{keyword}` has been removed."
                 else:
-                    success_msg = f"<:icons_Wrong:1382701332955402341> | No trigger found for keyword `{keyword}`."
+                    success_msg = f" | No trigger found for keyword `{keyword}`."
 
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(success_msg, ephemeral=True)
@@ -214,7 +214,7 @@ class TriggerSystem(commands.Cog):
                 triggers = await cur.fetchall()
 
             if not triggers:
-                no_triggers_msg = "<:clipboard1:1383857546410070117> | No triggers configured for this server."
+                no_triggers_msg = " | No triggers configured for this server."
                 if isinstance(ctx, discord.Interaction):
                     await ctx.followup.send(no_triggers_msg, ephemeral=True)
                 else:
@@ -222,7 +222,7 @@ class TriggerSystem(commands.Cog):
                 return
 
             embed = discord.Embed(
-                title="<:clipboard1:1383857546410070117> Active Triggers",
+                title=" Active Triggers",
                 description=f"**{len(triggers)} trigger(s) configured for this server**",
                 color=0x00D4FF
             )
@@ -233,14 +233,14 @@ class TriggerSystem(commands.Cog):
                 trigger_list.append(f"**{i}.** `{keyword}` → {preview}")
 
             embed.add_field(
-                name="<:Target:1382706193855942737> Keyword Triggers",
+                name=" Keyword Triggers",
                 value="\n".join(trigger_list),
                 inline=False
             )
 
             if len(triggers) > 10:
                 embed.add_field(
-                    name="<:stats_1:1382703019334045830> Additional Info",
+                    name=" Additional Info",
                     value=f"... and {len(triggers) - 10} more triggers",
                     inline=False
                 )
