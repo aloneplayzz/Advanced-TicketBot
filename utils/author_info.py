@@ -18,7 +18,7 @@ class TicketAuthorInfoSystem:
             member = guild.get_member(user_id)
             
             if member:
-                logger.info(f"<:j_icons_Correct:1382701297987485706> Direct guild lookup found member {user_id} in server {guild.id}")
+                logger.info(f"Direct guild lookup found member {user_id} in server {guild.id}")
                 return await self._get_member_info(member)
             
             logger.info(f"🔄 Member {user_id} not in cache, forcing guild chunk for {guild.id}")
@@ -29,21 +29,21 @@ class TicketAuthorInfoSystem:
                 
                 member = guild.get_member(user_id)
                 if member:
-                    logger.info(f"<:j_icons_Correct:1382701297987485706> Found member {user_id} after chunking guild {guild.id}")
+                    logger.info(f" Found member {user_id} after chunking guild {guild.id}")
                     return await self._get_member_info(member)
                 else:
-                    logger.info(f"<:icons_Wrong:1382701332955402341> Member {user_id} definitively not in guild {guild.id} after chunking")
+                    logger.info(f" Member {user_id} definitively not in guild {guild.id} after chunking")
                     
             except Exception as chunk_error:
-                logger.warning(f"<:warning:1382701413284446228> Failed to chunk guild {guild.id}: {chunk_error}")
+                logger.warning(f" Failed to chunk guild {guild.id}: {chunk_error}")
             
             logger.info(f"🔍 Performing manual member search for {user_id} in guild {guild.id}")
             for member in guild.members:
                 if member.id == user_id:
-                    logger.info(f"<:j_icons_Correct:1382701297987485706> Manual search found member {user_id} in guild {guild.id}")
+                    logger.info(f" Manual search found member {user_id} in guild {guild.id}")
                     return await self._get_member_info(member)
             
-            logger.info(f"<:icons_Wrong:1382701332955402341> User {user_id} confirmed NOT in server {guild.id} - trying API")
+            logger.info(f" User {user_id} confirmed NOT in server {guild.id} - trying API")
             if fetch_from_api:
                 try:
                     user = await self.bot.fetch_user(user_id)
@@ -51,17 +51,17 @@ class TicketAuthorInfoSystem:
                         logger.info(f"📡 API fetch successful for user {user_id} - user left server")
                         return await self._get_left_user_info(user, guild)
                 except discord.NotFound:
-                    logger.info(f"<:Icons_Trash:1382703995700645969> User {user_id} account deleted")
+                    logger.info(f" User {user_id} account deleted")
                     return await self._get_deleted_user_info(user_id)
                 except discord.HTTPException as e:
-                    logger.warning(f"<:warning:1382701413284446228> HTTP error fetching user {user_id}: {e}")
+                    logger.warning(f" HTTP error fetching user {user_id}: {e}")
                     return await self._get_unknown_user_info(user_id)
             
             logger.info(f"❓ Could not determine status of user {user_id}")
             return await self._get_unknown_user_info(user_id)
             
         except Exception as e:
-            logger.error(f"<:icons_Wrong:1382701332955402341> Error getting user info for {user_id}: {e}")
+            logger.error(f" Error getting user info for {user_id}: {e}")
             return await self._get_error_info(user_id, str(e))
     
     async def _get_member_info(self, member):
@@ -281,7 +281,7 @@ class TicketAuthorInfoSystem:
         
         embed.add_field(
             name="Status",
-            value="```<:warning:1382701413284446228> User has left the server```",
+            value="``` User has left the server```",
             inline=False
         )
         
@@ -307,7 +307,7 @@ class TicketAuthorInfoSystem:
         
         embed.add_field(
             name="Status",
-            value="```<:icons_Wrong:1382701332955402341> User account has been deleted```",
+            value="``` User account has been deleted```",
             inline=False
         )
         
@@ -338,7 +338,7 @@ class TicketAuthorInfoSystem:
         
         embed.add_field(
             name="Status",
-            value="```<:warning:1382701413284446228> User has left the server```",
+            value="``` User has left the server```",
             inline=False
         )
         
@@ -384,7 +384,7 @@ class UserAvatarView(discord.ui.View):
         super().__init__(timeout=300)
         self.user_info = user_info
     
-    @discord.ui.button(label="View Avatar", style=discord.ButtonStyle.primary, emoji="<:icons_heart:1382705238619984005>")
+    @discord.ui.button(label="View Avatar", style=discord.ButtonStyle.primary, emoji="")
     async def view_avatar(self, interaction: discord.Interaction, button: discord.ui.Button):
         try:
             if self.user_info['type'] in ['member', 'left_user']:
@@ -415,10 +415,10 @@ class UserAvatarView(discord.ui.View):
                 avatar_embed.set_footer(text="Support System • Avatar Viewer")
                 await interaction.response.send_message(embed=avatar_embed, ephemeral=True)
             else:
-                await interaction.response.send_message("<:icons_Wrong:1382701332955402341> Avatar not available for this user", ephemeral=True)
+                await interaction.response.send_message(" Avatar not available for this user", ephemeral=True)
         except Exception as e:
             logger.error(f"Error displaying avatar: {e}")
-            await interaction.response.send_message(f"<:icons_Wrong:1382701332955402341> Error displaying avatar: {str(e)}", ephemeral=True)
+            await interaction.response.send_message(f" Error displaying avatar: {str(e)}", ephemeral=True)
 
 class TicketClosedLogView(discord.ui.View):
     """Enhanced ticket closed log view with advanced author info"""
@@ -429,7 +429,7 @@ class TicketClosedLogView(discord.ui.View):
         self.ticket_data = ticket_data
         self.author_system = TicketAuthorInfoSystem(bot)
     
-    @discord.ui.button(label="Ticket Author Info", style=discord.ButtonStyle.secondary, emoji="<:id_icons:1384041001114407013>", custom_id="advanced_ticket_author_info")
+    @discord.ui.button(label="Ticket Author Info", style=discord.ButtonStyle.secondary, emoji="", custom_id="advanced_ticket_author_info")
     async def author_info(self, interaction: discord.Interaction, button: discord.ui.Button):
         try:
             await interaction.response.defer(ephemeral=True)
@@ -444,7 +444,7 @@ class TicketClosedLogView(discord.ui.View):
                         creator_id = int(match.group(1))
             
             if not creator_id:
-                await interaction.followup.send("<:icons_Wrong:1382701332955402341> **Creator ID not found in ticket data**", ephemeral=True)
+                await interaction.followup.send(" **Creator ID not found in ticket data**", ephemeral=True)
                 return
             
             user_info = await self.author_system.get_user_info(interaction.guild, creator_id)
@@ -459,4 +459,4 @@ class TicketClosedLogView(discord.ui.View):
             
         except Exception as e:
             logger.error(f"Error in advanced author info: {e}")
-            await interaction.followup.send(f"<:icons_Wrong:1382701332955402341> **System Error:** {str(e)}", ephemeral=True)
+            await interaction.followup.send(f" **System Error:** {str(e)}", ephemeral=True)
