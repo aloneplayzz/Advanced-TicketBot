@@ -24,7 +24,7 @@ class TicketControlView(discord.ui.View):
         if not self.priority_used:
             self.add_priority_selector()
 
-    @discord.ui.button(label="Close Ticket", style=discord.ButtonStyle.danger, emoji="<:welcome:1382706419765350480>", custom_id="close_ticket_btn", row=0)
+    @discord.ui.button(label="Close Ticket", style=discord.ButtonStyle.danger, emoji="", custom_id="close_ticket_btn", row=0)
     async def close_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         try:
 
@@ -34,10 +34,10 @@ class TicketControlView(discord.ui.View):
 
                 if not result:
                     embed = discord.Embed(
-                        title="<:icons_Wrong:1382701332955402341> System Configuration Error",
+                        title=" System Configuration Error",
                         description="**The ticket system is not properly configured.**\n\n"
-                                   "<:icons_wrench:1382702984940617738> **Issue:** Missing system configuration\n"
-                                   "<:lightbulb:1382701619753386035> **Solution:** Contact an administrator to resolve this issue\n"
+                                   " **Issue:** Missing system configuration\n"
+                                   " **Solution:** Contact an administrator to resolve this issue\n"
                                    "📞 **Support:** Use `/setup-tickets` to reconfigure",
                         color=0xFF6B6B
                     )
@@ -54,22 +54,22 @@ class TicketControlView(discord.ui.View):
 
                 if not (is_creator or is_support or is_admin):
                     embed = discord.Embed(
-                        title="<:icons_locked:1382701901685985361> Access Restricted",
+                        title=" Access Restricted",
                         description="**You don't have permission to close this ticket.**\n\n"
                                    "This ticket can only be closed by authorized users for security and organization.",
                         color=0xFF6B6B
                     )
 
                     embed.add_field(
-                        name="<:Target:1382706193855942737> Authorized Users",
-                        value=f"**<:icons_Person:1382703571056853082> Ticket Creator:** Original requester\n"
-                              f"**<:shield:1382703287891136564> Support Staff:** {support_role.mention if support_role else 'Support Role'}\n"
-                              f"**<:LM_Icons_Crown:1384043659330191390> Administrators:** Server administrators",
+                        name=" Authorized Users",
+                        value=f"** Ticket Creator:** Original requester\n"
+                              f"** Support Staff:** {support_role.mention if support_role else 'Support Role'}\n"
+                              f"** Administrators:** Server administrators",
                         inline=False
                     )
 
                     embed.add_field(
-                        name="<:lightbulb:1382701619753386035> Need Help?",
+                        name=" Need Help?",
                         value="• **Resolve your issue:** Work with support to solve your problem\n"
                               "• **Request closure:** Ask support staff to close when resolved\n"
                               "• **Contact admin:** Get help if you have permission issues",
@@ -81,21 +81,21 @@ class TicketControlView(discord.ui.View):
 
 
             confirmation_embed = discord.Embed(
-                title="<:icons_locked:1382701901685985361> Ticket Closure Confirmation",
+                title=" Ticket Closure Confirmation",
                 description=f"**Are you sure you want to close this support ticket?**\n\n"
-                           f"<:warning:1382701413284446228> **Important:** This action is permanent and cannot be undone.\n\n"
+                           f" **Important:** This action is permanent and cannot be undone.\n\n"
                            f"**What happens when you close:**\n"
-                           f"• <:clipboard1:1383857546410070117> Complete conversation transcript will be generated\n"
-                           f"• <:icons_email:1384043381570670682> Transcript sent to ticket creator's DMs\n"
-                           f"• <:icons_folder:1382703979754160169> Ticket logged in support system\n"
-                           f"• <:type_icons:1384042158801027136> Channel will be permanently deleted\n"
-                           f"• <:icons_star:1382705271591272471> Rating request sent to customer",
+                           f"•  Complete conversation transcript will be generated\n"
+                           f"•  Transcript sent to ticket creator's DMs\n"
+                           f"•  Ticket logged in support system\n"
+                           f"•  Channel will be permanently deleted\n"
+                           f"•  Rating request sent to customer",
                 color=0xFF6B6B,
                 timestamp=discord.utils.utcnow()
             )
 
             confirmation_embed.add_field(
-                name="<:Ticket_icons:1382703084815257610> Ticket Information",
+                name=" Ticket Information",
                 value=f"**Channel:** {interaction.channel.mention}\n"
                       f"**Closing User:** {interaction.user.mention}\n"
                       f"**Action Type:** {'Creator Closure' if is_creator else 'Staff Closure' if is_support else 'Admin Closure'}",
@@ -110,13 +110,13 @@ class TicketControlView(discord.ui.View):
         except Exception as e:
             logger.error(f"Error in close button: {e}")
             error_embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Error",
+                title=" Error",
                 description=f"**An error occurred:** {str(e)}",
                 color=0xFF6B6B
             )
             await interaction.response.send_message(embed=error_embed, ephemeral=True)
 
-    @discord.ui.button(label="Claim Ticket", style=discord.ButtonStyle.success, emoji="<:bye:1382701701399707709>", custom_id="claim_ticket_btn", row=0)
+    @discord.ui.button(label="Claim Ticket", style=discord.ButtonStyle.success, emoji="", custom_id="claim_ticket_btn", row=0)
     async def claim_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         try:
 
@@ -126,7 +126,7 @@ class TicketControlView(discord.ui.View):
 
                 if not result:
                     embed = discord.Embed(
-                        title="<:icons_Wrong:1382701332955402341> System Error",
+                        title=" System Error",
                         description="**Ticket system is not properly configured.**\n\nPlease contact an administrator to resolve this issue.",
                         color=0xFF6B6B
                     )
@@ -142,11 +142,11 @@ class TicketControlView(discord.ui.View):
                 
                 if not has_support_access:
                     embed = discord.Embed(
-                        title="<:shield:1382703287891136564> Access Restricted",
+                        title=" Access Restricted",
                         description="**Only support staff members can claim tickets.**\n\n"
-                                   f"<:Target:1382706193855942737> **Required Role:** {support_role.mention if support_role else 'Support Role'}\n"
-                                   f"<:clipboard1:1383857546410070117> **Your Roles:** {', '.join([role.mention for role in interaction.user.roles if role != interaction.guild.default_role][:3])}\n\n"
-                                   f"<:lightbulb:1382701619753386035> **Need access?** Contact an administrator to get the support role.",
+                                   f" **Required Role:** {support_role.mention if support_role else 'Support Role'}\n"
+                                   f" **Your Roles:** {', '.join([role.mention for role in interaction.user.roles if role != interaction.guild.default_role][:3])}\n\n"
+                                   f" **Need access?** Contact an administrator to get the support role.",
                         color=0xFF6B6B
                     )
                     await interaction.response.send_message(embed=embed, ephemeral=True)
@@ -160,11 +160,11 @@ class TicketControlView(discord.ui.View):
 
                     if claim_result[0] == interaction.user.id:
                         embed = discord.Embed(
-                            title="<:j_icons_Correct:1382701297987485706> Already Your Ticket",
+                            title=" Already Your Ticket",
                             description=f"**You have already claimed this ticket.**\n\n"
-                                       f"<:Target:1382706193855942737> **Status:** This ticket is assigned to you\n"
-                                       f"<:clipboard1:1383857546410070117> **Action:** No further action needed\n"
-                                       f"<:type_icons:1384042158801027136> **Continue:** Assist the customer as normal",
+                                       f" **Status:** This ticket is assigned to you\n"
+                                       f" **Action:** No further action needed\n"
+                                       f" **Continue:** Assist the customer as normal",
                             color=0x00FF88
                         )
                         await interaction.response.send_message(embed=embed, ephemeral=True)
@@ -172,12 +172,12 @@ class TicketControlView(discord.ui.View):
 
                     claimer = interaction.guild.get_member(claim_result[0])
                     embed = discord.Embed(
-                        title="<:icons_locked:1382701901685985361> Already Claimed",
+                        title=" Already Claimed",
                         description=f"**This ticket has already been claimed and is being handled.**\n\n"
-                                   f"<:Target:1382706193855942737> **Assigned Agent:** {claimer.mention if claimer else 'Unknown Agent'}\n"
-                                   f"<:label:1384044597386285121> **Agent Name:** {claimer.display_name if claimer else 'Unknown'}\n"
-                                   f"<:clipboard1:1383857546410070117> **Status:** 🟢 Active Support\n\n"
-                                   f"<:lightbulb:1382701619753386035> **Need to reassign?** Use `/transfer-ticket @new_agent` command",
+                                   f" **Assigned Agent:** {claimer.mention if claimer else 'Unknown Agent'}\n"
+                                   f" **Agent Name:** {claimer.display_name if claimer else 'Unknown'}\n"
+                                   f" **Status:** 🟢 Active Support\n\n"
+                                   f" **Need to reassign?** Use `/transfer-ticket @new_agent` command",
                         color=0xFF8C00
                     )
                     await interaction.response.send_message(embed=embed, ephemeral=True)
@@ -260,7 +260,7 @@ class TicketControlView(discord.ui.View):
         except Exception as e:
             logger.error(f"Error claiming ticket: {e}")
             embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Claim Error",
+                title=" Claim Error",
                 description=f"**We encountered an issue claiming this ticket.**\n\n**Error:** {str(e)}\n\nPlease try again or contact an administrator.",
                 color=0xFF6B6B
             )
@@ -305,7 +305,7 @@ class TicketControlView(discord.ui.View):
 
             if not (has_support_role or is_admin):
                 embed = discord.Embed(
-                    title="<:icons_locked:1382701901685985361> Permission Denied",
+                    title=" Permission Denied",
                     description="**Only support staff can change priority.**\n\nYou need to have at least one support role to modify ticket priorities.",
                     color=0xFF6B6B
                 )
@@ -394,7 +394,7 @@ class TicketControlView(discord.ui.View):
                     logger.error(f"Could not send fallback notification: {send_error}")
 
             embed = discord.Embed(
-                title=f"<:j_icons_Correct:1382701297987485706> Priority Updated",
+                title=f" Priority Updated",
                 description=f"**{interaction.user.display_name}** changed this ticket priority to **{priority_emoji} {priority}**.\n\nChannel name and control panel updated with new priority.",
                 color=0x00D4FF,
                 timestamp=datetime.now(timezone.utc)
@@ -405,7 +405,7 @@ class TicketControlView(discord.ui.View):
         except Exception as e:
             logger.error(f"Error setting priority: {e}")
             error_embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Error",
+                title=" Error",
                 description=f"Failed to set priority: {str(e)}",
                 color=0xFF6B6B
             )
@@ -479,7 +479,7 @@ class SetupWizardView(discord.ui.View):
             'embed_title': ' Support Center',
             'embed_description': 'Need assistance? Select a category below to create a support ticket. Our expert team will help you shortly!',
             'embed_color': 0x2F3136,
-            'embed_footer': 'Powered by CodeX Development™ • Support System',
+            'embed_footer': 'Powered by Space Development™ • Support System',
             'embed_image_url': None,
             'panel_type': 'dropdown',
             'ticket_limit': 3
@@ -503,22 +503,22 @@ class SetupWizardView(discord.ui.View):
 
         current_time = discord.utils.utcnow()
         embed = discord.Embed(
-            title="<:icons_wrench:1382702984940617738> Ticket Setup Wizard",
+            title=" Ticket Setup Wizard",
             description="**Configure your support system with our advanced setup wizard**\n\n"
-                       "**<:clipboard1:1383857546410070117> Required Configuration:**\n"
+                       "** Required Configuration:**\n"
                        "• Select ticket panel channel from dropdown\n"
                        "• Choose logs channel for transcripts\n" 
                        "• Assign support role for staff\n\n"
-                       "**<:gear_icons:1384042417975464046> Advanced Options:**\n"
+                       "** Advanced Options:**\n"
                        "• Use custom buttons for unlimited choices\n"
                        "• Customize panel appearance and branding\n"
                        "•  embed styling options\n\n"
-                       f"<:icons_clock:1382701751206936697> **Setup expires in 30 minutes**",
+                       f" **Setup expires in 30 minutes**",
             color=0x5865F2,
             timestamp=current_time
         )
         embed.add_field(
-            name="<:lightbulb:1382701619753386035> **Pro Setup Tips**",
+            name=" **Pro Setup Tips**",
             value="• **Required:** Panel channel, logs channel, support role\n"
                   "• **Custom Options:** Use buttons for channels/roles not in dropdown\n"
                   "• **Branding:** Customize colors, titles, and descriptions\n"
@@ -539,23 +539,23 @@ class SetupWizardView(discord.ui.View):
             if message.role_mentions:
                 role = message.role_mentions[0]
                 self.setup_data['role_id'] = role.id
-                await message.reply(f"<:j_icons_Correct:1382701297987485706> Custom support role set to {role.mention}")
+                await message.reply(f" Custom support role set to {role.mention}")
             else:
-                await message.reply("<:icons_Wrong:1382701332955402341> Please mention a valid role!")
+                await message.reply(" Please mention a valid role!")
         elif self.waiting_for_custom == "panel_channel":
             if message.channel_mentions:
                 channel = message.channel_mentions[0]
                 self.setup_data['channel_id'] = channel.id
-                await message.reply(f"<:j_icons_Correct:1382701297987485706> Custom panel channel set to {channel.mention}")
+                await message.reply(f" Custom panel channel set to {channel.mention}")
             else:
-                await message.reply("<:icons_Wrong:1382701332955402341> Please mention a valid channel!")
+                await message.reply(" Please mention a valid channel!")
         elif self.waiting_for_custom == "log_channel":
             if message.channel_mentions:
                 channel = message.channel_mentions[0]
                 self.setup_data['log_channel_id'] = channel.id
-                await message.reply(f"<:j_icons_Correct:1382701297987485706> Custom log channel set to {channel.mention}")
+                await message.reply(f" Custom log channel set to {channel.mention}")
             else:
-                await message.reply("<:icons_Wrong:1382701332955402341> Please mention a valid channel!")
+                await message.reply(" Please mention a valid channel!")
 
         self.waiting_for_custom = None
 
@@ -587,16 +587,16 @@ class SetupWizardView(discord.ui.View):
             if self.guild_id in self.bot.active_setups:
                 del self.bot.active_setups[self.guild_id]
 
-            return True, "<:j_icons_Correct:1382701297987485706> Setup completed successfully!"
+            return True, " Setup completed successfully!"
 
         except Exception as e:
             logger.error(f"Error finishing setup: {e}")
-            return False, f"<:icons_Wrong:1382701332955402341> Setup failed: {str(e)}"
+            return False, f" Setup failed: {str(e)}"
 
 class PanelChannelSelect(discord.ui.ChannelSelect):
     def __init__(self):
         super().__init__(
-            placeholder="<:Ticket_icons:1382703084815257610> Select Ticket Panel Channel...",
+            placeholder=" Select Ticket Panel Channel...",
             channel_types=[discord.ChannelType.text],
             custom_id="panel_channel_select",
             row=0
@@ -607,7 +607,7 @@ class PanelChannelSelect(discord.ui.ChannelSelect):
         view.setup_data['channel_id'] = self.values[0].id
 
         embed = discord.Embed(
-            title="<:j_icons_Correct:1382701297987485706> Panel Channel Selected",
+            title=" Panel Channel Selected",
             description=f"**Ticket Panel Channel:** {self.values[0].mention}\n\nUsers will create tickets from this channel.",
             color=0x00FF88
         )
@@ -616,7 +616,7 @@ class PanelChannelSelect(discord.ui.ChannelSelect):
 class LogChannelSelect(discord.ui.ChannelSelect):
     def __init__(self):
         super().__init__(
-            placeholder="<:clipboard1:1383857546410070117> Select Logs Channel...",
+            placeholder=" Select Logs Channel...",
             channel_types=[discord.ChannelType.text],
             custom_id="log_channel_select",
             row=0
@@ -627,7 +627,7 @@ class LogChannelSelect(discord.ui.ChannelSelect):
         view.setup_data['log_channel_id'] = self.values[0].id
 
         embed = discord.Embed(
-            title="<:j_icons_Correct:1382701297987485706> Log Channel Selected", 
+            title=" Log Channel Selected", 
             description=f"**Log Channel:** {self.values[0].mention}\n\nTicket transcripts and logs will be sent here.",
             color=0x00FF88
         )
@@ -646,7 +646,7 @@ class SupportRoleSelect(discord.ui.RoleSelect):
         view.setup_data['role_id'] = self.values[0].id
 
         embed = discord.Embed(
-            title="<:j_icons_Correct:1382701297987485706> Support Role Selected",
+            title=" Support Role Selected",
             description=f"**Support Role:** {self.values[0].mention}\n\nMembers with this role can manage tickets.",
             color=0x00FF88
         )
@@ -657,7 +657,7 @@ class CustomRoleButton(discord.ui.Button):
         super().__init__(
             label="Custom Role",
             style=discord.ButtonStyle.secondary,
-            emoji="<:shield:1382703287891136564>",
+            emoji="",
             custom_id="custom_role_btn",
             row=1
         )
@@ -667,7 +667,7 @@ class CustomRoleButton(discord.ui.Button):
         view.waiting_for_custom = "role"
 
         embed = discord.Embed(
-            title="<:shield:1382703287891136564> Custom Support Role",
+            title=" Custom Support Role",
             description="**Please mention the role in chat**\n\nExample: `@Support Team`\n\nI'll automatically detect and set it as your support role.",
             color=0xFF8C00
         )
@@ -678,7 +678,7 @@ class CustomPanelChannelButton(discord.ui.Button):
         super().__init__(
             label="Custom Panel Channel",
             style=discord.ButtonStyle.secondary,
-            emoji="<:megaphone:1382704888294936649>",
+            emoji="",
             custom_id="custom_panel_channel_btn",
             row=1
         )
@@ -688,7 +688,7 @@ class CustomPanelChannelButton(discord.ui.Button):
         view.waiting_for_custom = "panel_channel"
 
         embed = discord.Embed(
-            title="<:megaphone:1382704888294936649> Custom Panel Channel",
+            title=" Custom Panel Channel",
             description="**Please mention the channel in chat**\n\nExample: `#support`\n\nI'll set it as your ticket panel channel.",
             color=0xFF8C00
         )
@@ -699,7 +699,7 @@ class CustomLogChannelButton(discord.ui.Button):
         super().__init__(
             label="Custom Log Channel", 
             style=discord.ButtonStyle.secondary,
-            emoji="<:stats_1:1382703019334045830>",
+            emoji="",
             custom_id="custom_log_channel_btn",
             row=2
         )
@@ -709,7 +709,7 @@ class CustomLogChannelButton(discord.ui.Button):
         view.waiting_for_custom = "log_channel"
 
         embed = discord.Embed(
-            title="<:stats_1:1382703019334045830> Custom Log Channel",
+            title=" Custom Log Channel",
             description="**Please mention the channel in chat**\n\nExample: `#ticket-logs`\n\nI'll set it as your transcript log channel.",
             color=0xFF8C00
         )
@@ -720,7 +720,7 @@ class PanelCustomizationButton(discord.ui.Button):
         super().__init__(
             label="Panel Customization",
             style=discord.ButtonStyle.primary,
-            emoji="<:paint_icons:1383849816022581332>",
+            emoji="",
             custom_id="panel_customization_btn",
             row=2
         )
@@ -734,7 +734,7 @@ class ConfirmSetupButton(discord.ui.Button):
         super().__init__(
             label="Confirm Setup",
             style=discord.ButtonStyle.success,
-            emoji="<:j_icons_Correct:1382701297987485706>",
+            emoji="",
             custom_id="confirm_setup_btn",
             row=3
         )
@@ -744,7 +744,7 @@ class ConfirmSetupButton(discord.ui.Button):
 
         if not view.setup_data['channel_id']:
             embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Missing Panel Channel",
+                title=" Missing Panel Channel",
                 description="Please select a ticket panel channel first!",
                 color=0xFF0000
             )
@@ -753,7 +753,7 @@ class ConfirmSetupButton(discord.ui.Button):
 
         if not view.setup_data['role_id']:
             embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Missing Support Role",
+                title=" Missing Support Role",
                 description="Please select a support role first!",
                 color=0xFF0000
             )
@@ -766,37 +766,37 @@ class ConfirmSetupButton(discord.ui.Button):
         log_channel = guild.get_channel(view.setup_data['log_channel_id']) if view.setup_data['log_channel_id'] else None
 
         embed = discord.Embed(
-            title="<:j_icons_Correct:1382701297987485706> Setup Configuration Preview",
+            title=" Setup Configuration Preview",
             description="**Review your configuration before confirming**\n\nEverything looks good? Click **Finish Setup** to complete!",
             color=0x00D4FF,
             timestamp=discord.utils.utcnow()
         )
 
         embed.add_field(
-            name="<:Ticket_icons:1382703084815257610> **Panel Configuration**",
+            name=" **Panel Configuration**",
             value=f"**Channel:** {panel_channel.mention}\n**Style:** {view.setup_data['panel_type'].title()}",
             inline=True
         )
 
         embed.add_field(
-            name="<:people_icons:1384040549937451068> **Support Configuration**", 
+            name=" **Support Configuration**", 
             value=f"**Support Role:** {support_role.mention}\n**Ticket Limit:** {view.setup_data['ticket_limit']}",
             inline=True
         )
 
         embed.add_field(
-            name="<:stats_1:1382703019334045830> **Logging Configuration**",
+            name=" **Logging Configuration**",
             value=f"**Log Channel:** {log_channel.mention if log_channel else 'None'}\n**Transcripts:** {'Enabled' if log_channel else 'Disabled'}",
             inline=True
         )
 
         embed.add_field(
-            name="<:paint_icons:1383849816022581332> **Panel Appearance**",
+            name=" **Panel Appearance**",
             value=f"**Title:** {view.setup_data['embed_title']}\n**Color:** #{hex(view.setup_data['embed_color'])[2:].upper()}",
             inline=False
         )
 
-        embed.set_footer(text="CodeX Development™ • Configuration Preview")
+        embed.set_footer(text="Space Development™ • Configuration Preview")
 
         confirm_view = FinalConfirmView(view)
         await interaction.response.send_message(embed=embed, view=confirm_view, ephemeral=True)
@@ -806,29 +806,29 @@ class FinalConfirmView(discord.ui.View):
         super().__init__(timeout=300)
         self.setup_view = setup_view
 
-    @discord.ui.button(label="Finish Setup", style=discord.ButtonStyle.success, emoji="<:UA_Rocket_icons:1382701592851124254>")
+    @discord.ui.button(label="Finish Setup", style=discord.ButtonStyle.success, emoji="")
     async def finish_setup(self, interaction: discord.Interaction, button: discord.ui.Button):
         success, message = await self.setup_view.finish_setup()
 
         if success:
             embed = discord.Embed(
-                title="<:giveaway_icons:1383874296727732317> Setup Complete!",
+                title=" Setup Complete!",
                 description="**Your ticket system is ready!**\n\n"
                            "**Next Steps:**\n"
                            "1️⃣ Add categories: `/add-category <name>`\n"
                            "2️⃣ Send panel: `/send-panel dropdown`\n"
                            "3️⃣ Test the system: Create a ticket!\n\n"
-                           "**<:glowingstar:1384041798669828098> Pro Tips:**\n"
+                           "** Pro Tips:**\n"
                            "• Add multiple categories for organization\n"
                            "• Train your support team on ticket commands\n"
                            "• Monitor the log channel for ticket activities",
                 color=0x00FF88,
                 timestamp=discord.utils.utcnow()
             )
-            embed.set_footer(text="CodeX Development™ • Support System Active")
+            embed.set_footer(text="Space Development™ • Support System Active")
         else:
             embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Setup Failed",
+                title=" Setup Failed",
                 description=f"**Error:** {message}\n\nPlease try the setup again or contact support.",
                 color=0xFF0000
             )
@@ -838,10 +838,10 @@ class FinalConfirmView(discord.ui.View):
 
         await interaction.response.edit_message(embed=embed, view=self)
 
-    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="<:icons_Wrong:1382701332955402341>")
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="")
     async def cancel_setup(self, interaction: discord.Interaction, button: discord.ui.Button):
         embed = discord.Embed(
-            title="<:icons_Wrong:1382701332955402341> Setup Cancelled",
+            title=" Setup Cancelled",
             description="Setup has been cancelled. No changes were made.\n\nYou can restart setup anytime with `/setup-tickets`.",
             color=0xFF6B6B
         )
@@ -864,7 +864,7 @@ class TicketSetupView(discord.ui.View):
             'embed_description': 'Need assistance? Select a category below to create a support ticket. Our expert team will help you shortly!',
             'embed_color': 0x2F3136,
             'embed_image_url': None,
-            'embed_footer': 'Powered by CodeX Development™ • Support System',
+            'embed_footer': 'Powered by Space Development™ • Support System',
             'ticket_limit': 3
         }
         self.waiting_for_custom = None
@@ -887,23 +887,23 @@ class TicketSetupView(discord.ui.View):
             if message.role_mentions:
                 role = message.role_mentions[0]
                 self.setup_data['role_id'] = role.id
-                await message.reply(f"<:j_icons_Correct:1382701297987485706> **Custom support role set to {role.mention}**")
+                await message.reply(f" **Custom support role set to {role.mention}**")
             else:
-                await message.reply("<:icons_Wrong:1382701332955402341> Please mention a valid role!")
+                await message.reply(" Please mention a valid role!")
         elif self.waiting_for_custom == "panel_channel":
             if message.channel_mentions:
                 channel = message.channel_mentions[0]
                 self.setup_data['channel_id'] = channel.id
-                await message.reply(f"<:j_icons_Correct:1382701297987485706> **Custom panel channel set to {channel.mention}**")
+                await message.reply(f" **Custom panel channel set to {channel.mention}**")
             else:
-                await message.reply("<:icons_Wrong:1382701332955402341> Please mention a valid channel!")
+                await message.reply(" Please mention a valid channel!")
         elif self.waiting_for_custom == "log_channel":
             if message.channel_mentions:
                 channel = message.channel_mentions[0]
                 self.setup_data['log_channel_id'] = channel.id
-                await message.reply(f"<:j_icons_Correct:1382701297987485706> **Custom log channel set to {channel.mention}**")
+                await message.reply(f" **Custom log channel set to {channel.mention}**")
             else:
-                await message.reply("<:icons_Wrong:1382701332955402341> Please mention a valid channel!")
+                await message.reply(" Please mention a valid channel!")
 
         self.waiting_for_custom = None
 
@@ -932,11 +932,11 @@ class TicketSetupView(discord.ui.View):
             if self.ctx.guild.id in self.bot.active_setups:
                 del self.bot.active_setups[self.ctx.guild.id]
 
-            return True, "<:j_icons_Correct:1382701297987485706> Setup completed successfully!"
+            return True, " Setup completed successfully!"
 
         except Exception as e:
             logger.error(f"Error finishing setup: {e}")
-            return False, f"<:icons_Wrong:1382701332955402341> Setup failed: {str(e)}"
+            return False, f" Setup failed: {str(e)}"
 
 class SetupPanelChannelSelect(discord.ui.Select):
     def __init__(self, guild):
@@ -955,7 +955,7 @@ class SetupPanelChannelSelect(discord.ui.Select):
                 label="Custom Channel",
                 value="custom_channel",
                 description="Mention a channel in chat",
-                emoji="<:megaphone:1382704888294936649>"
+                emoji=""
             ))
 
         super().__init__(
@@ -971,7 +971,7 @@ class SetupPanelChannelSelect(discord.ui.Select):
         if self.values[0] == "custom_channel":
             view.waiting_for_custom = "panel_channel"
             embed = discord.Embed(
-                title="<:megaphone:1382704888294936649> Custom Panel Channel",
+                title=" Custom Panel Channel",
                 description="**Please mention the channel in chat**\n\nExample: `#support`\n\nI'll set it as your ticket panel channel.",
                 color=0xFF8C00
             )
@@ -982,7 +982,7 @@ class SetupPanelChannelSelect(discord.ui.Select):
             view.setup_data['channel_id'] = channel_id
 
             embed = discord.Embed(
-                title="<:Ticket_icons:1382703084815257610> Panel Channel Selected",
+                title=" Panel Channel Selected",
                 description=f"**Ticket Panel Channel:** {channel.mention}\n\nUsers will create tickets from this channel.",
                 color=0x00FF88
             )
@@ -1005,7 +1005,7 @@ class SetupLogChannelSelect(discord.ui.Select):
                 label="Custom Log Channel",
                 value="custom_log_channel",
                 description="Mention a channel in chat",
-                emoji="<:stats_1:1382703019334045830>"
+                emoji=""
             ))
 
         super().__init__(
@@ -1021,7 +1021,7 @@ class SetupLogChannelSelect(discord.ui.Select):
         if self.values[0] == "custom_log_channel":
             view.waiting_for_custom = "log_channel"
             embed = discord.Embed(
-                title="<:stats_1:1382703019334045830> Custom Log Channel",
+                title=" Custom Log Channel",
                 description="**Please mention the channel in chat**\n\nExample: `#ticket-logs`\n\nI'll set it as your transcript log channel.",
                 color=0xFF8C00
             )
@@ -1032,7 +1032,7 @@ class SetupLogChannelSelect(discord.ui.Select):
             view.setup_data['log_channel_id'] = channel_id
 
             embed = discord.Embed(
-                title="<:clipboard1:1383857546410070117> Log Channel Selected", 
+                title=" Log Channel Selected", 
                 description=f"**Log Channel:** {channel.mention}\n\nTicket transcripts and logs will be sent here.",
                 color=0x00FF88
             )
@@ -1055,7 +1055,7 @@ class SetupSupportRoleSelect(discord.ui.Select):
                 label="Custom Role",
                 value="custom_role",
                 description="Mention a role in chat",
-                emoji="<:shield:1382703287891136564>"
+                emoji=""
             ))
 
         super().__init__(
@@ -1071,7 +1071,7 @@ class SetupSupportRoleSelect(discord.ui.Select):
         if self.values[0] == "custom_role":
             view.waiting_for_custom = "role"
             embed = discord.Embed(
-                title="<:shield:1382703287891136564> Custom Support Role",
+                title=" Custom Support Role",
                 description="**Please mention the role in chat**\n\nExample: `@Support Team`\n\nI'll automatically detect and set it as your support role.",
                 color=0xFF8C00
             )
@@ -1082,7 +1082,7 @@ class SetupSupportRoleSelect(discord.ui.Select):
             view.setup_data['role_id'] = role_id
 
             embed = discord.Embed(
-                title="<:people_icons:1384040549937451068> Support Role Selected",
+                title=" Support Role Selected",
                 description=f"**Support Role:** {role.mention}\n\nMembers with this role can manage tickets.",
                 color=0x00FF88
             )
@@ -1122,7 +1122,7 @@ class NewPanelCustomizationModal(discord.ui.Modal):
     panel_footer = discord.ui.TextInput(
         label="Panel Footer Text",
         placeholder="Footer text for your panel...",
-        default="Powered by CodeX Development™ • Support System",
+        default="Powered by Space Development™ • Support System",
         max_length=100,
         required=False
     )
@@ -1164,7 +1164,7 @@ class NewPanelCustomizationModal(discord.ui.Modal):
                 self.setup_view.setup_data['embed_color'] = 0x5865F2
 
             embed = discord.Embed(
-                title="<:j_icons_Correct:1382701297987485706> Panel Customization Saved",
+                title=" Panel Customization Saved",
                 description="**Your panel customization has been applied successfully!**\n\n"
                            "The changes will be visible when you deploy your panel.",
                 color=0x00FF88,
@@ -1185,7 +1185,7 @@ class NewPanelCustomizationModal(discord.ui.Modal):
         except Exception as e:
             logger.error(f"Error in panel customization modal: {e}")
             error_embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Customization Error",
+                title=" Customization Error",
                 description=f"**Failed to save customization:** {str(e)}",
                 color=0xFF6B6B
             )
@@ -1196,7 +1196,7 @@ class SetupPanelCustomizationButton(discord.ui.Button):
         super().__init__(
             label="Customise Panel",
             style=discord.ButtonStyle.primary,
-            emoji="<:paint_icons:1383849816022581332>",
+            emoji="",
             custom_id="setup_panel_customization_btn",
             row=3
         )
@@ -1210,7 +1210,7 @@ class SetupConfirmButton(discord.ui.Button):
         super().__init__(
             label="Confirm",
             style=discord.ButtonStyle.success,
-            emoji="<:j_icons_Correct:1382701297987485706>",
+            emoji="",
             custom_id="setup_confirm_btn",
             row=3
         )
@@ -1220,7 +1220,7 @@ class SetupConfirmButton(discord.ui.Button):
 
         if not view.setup_data['channel_id']:
             embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Missing Panel Channel",
+                title=" Missing Panel Channel",
                 description="Please select a ticket panel channel first!",
                 color=0xFF0000
             )
@@ -1229,7 +1229,7 @@ class SetupConfirmButton(discord.ui.Button):
 
         if not view.setup_data['role_id']:
             embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Missing Support Role",
+                title=" Missing Support Role",
                 description="Please select a support role first!",
                 color=0xFF0000
             )
@@ -1242,37 +1242,37 @@ class SetupConfirmButton(discord.ui.Button):
         log_channel = guild.get_channel(view.setup_data['log_channel_id']) if view.setup_data['log_channel_id'] else None
 
         embed = discord.Embed(
-            title="<:j_icons_Correct:1382701297987485706> Setup Configuration Preview",
+            title=" Setup Configuration Preview",
             description="**Review your configuration before confirming**\n\nEverything looks good? Click **Finish Setup** to complete!",
             color=0x00D4FF,
             timestamp=discord.utils.utcnow()
         )
 
         embed.add_field(
-            name="<:Ticket_icons:1382703084815257610> **Panel Configuration**",
+            name=" **Panel Configuration**",
             value=f"**Channel:** {panel_channel.mention}\n**Ticket Limit:** {view.setup_data['ticket_limit']}",
             inline=True
         )
 
         embed.add_field(
-            name="<:people_icons:1384040549937451068> **Support Configuration**", 
+            name=" **Support Configuration**", 
             value=f"**Support Role:** {support_role.mention}",
             inline=True
         )
 
         embed.add_field(
-            name="<:stats_1:1382703019334045830> **Logging Configuration**",
+            name=" **Logging Configuration**",
             value=f"**Log Channel:** {log_channel.mention if log_channel else 'None'}\n**Transcripts:** {'Enabled' if log_channel else 'Disabled'}",
             inline=True
         )
 
         embed.add_field(
-            name="<:paint_icons:1383849816022581332> **Panel Appearance**",
+            name=" **Panel Appearance**",
             value=f"**Title:** {view.setup_data['embed_title']}\n**Color:** #{hex(view.setup_data['embed_color'])[2:].upper()}",
             inline=False
         )
 
-        embed.set_footer(text="CodeX Development™ • Configuration Preview")
+        embed.set_footer(text="Space Development™ • Configuration Preview")
 
         confirm_view = SetupFinalConfirmView(view)
         await interaction.response.send_message(embed=embed, view=confirm_view, ephemeral=True)
@@ -1282,29 +1282,29 @@ class SetupFinalConfirmView(discord.ui.View):
         super().__init__(timeout=300)
         self.setup_view = setup_view
 
-    @discord.ui.button(label="Finish Setup", style=discord.ButtonStyle.success, emoji="<:UA_Rocket_icons:1382701592851124254>")
+    @discord.ui.button(label="Finish Setup", style=discord.ButtonStyle.success, emoji="")
     async def finish_setup(self, interaction: discord.Interaction, button: discord.ui.Button):
         success, message = await self.setup_view.finish_setup()
 
         if success:
             embed = discord.Embed(
-                title="<:giveaway_icons:1383874296727732317> Setup Complete!",
+                title=" Setup Complete!",
                 description="**Your ticket system is ready!**\n\n"
                            "**Next Steps:**\n"
                            "1️⃣ Add categories: `/add-category <name>`\n"
                            "2️⃣ Send panel: `/send-panel dropdown`\n"
                            "3️⃣ Test the system: Create a ticket!\n\n"
-                           "**<:glowingstar:1384041798669828098> Pro Tips:**\n"
+                           "** Pro Tips:**\n"
                            "• Add multiple categories for organization\n"
                            "• Train your support team on ticket commands\n"
                            "• Monitor the log channel for ticket activities",
                 color=0x00FF88,
                 timestamp=discord.utils.utcnow()
             )
-            embed.set_footer(text="CodeX Development™ • Support System Active")
+            embed.set_footer(text="Space Development™ • Support System Active")
         else:
             embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Setup Failed",
+                title=" Setup Failed",
                 description=f"**Error:** {message}\n\nPlease try the setup again or contact support.",
                 color=0xFF0000
             )
@@ -1314,10 +1314,10 @@ class SetupFinalConfirmView(discord.ui.View):
 
         await interaction.response.edit_message(embed=embed, view=self)
 
-    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="<:icons_Wrong:1382701332955402341>")
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.danger, emoji="")
     async def cancel_setup(self, interaction: discord.Interaction, button: discord.ui.Button):
         embed = discord.Embed(
-            title="<:icons_Wrong:1382701332955402341> Setup Cancelled",
+            title=" Setup Cancelled",
             description="Setup has been cancelled. No changes were made.\n\nYou can restart setup anytime with `/setup-tickets`.",
             color=0xFF6B6B
         )
@@ -1360,7 +1360,7 @@ class TicketChannelView(discord.ui.View):
         close_button = discord.ui.Button(
             label="Close Ticket",
             style=discord.ButtonStyle.danger,
-            emoji="<:welcome:1382706419765350480>",
+            emoji="",
             custom_id="close_ticket_btn",
             row=0
         )
@@ -1377,7 +1377,7 @@ class TicketChannelView(discord.ui.View):
         claim_button = discord.ui.Button(
             label="Claim Ticket",
             style=discord.ButtonStyle.success,
-            emoji="<:bye:1382701701399707709>",
+            emoji="",
             custom_id="claim_ticket_btn",
             row=0
         )
@@ -1490,7 +1490,7 @@ class TicketChannelView(discord.ui.View):
 
                 if not (has_support_role or is_admin):
                     embed = discord.Embed(
-                        title="<:icons_locked:1382701901685985361> Permission Denied",
+                        title=" Permission Denied",
                         description="**Only support staff can change priority.**\n\nYou need to have at least one support role to modify ticket priorities.",
                         color=0xFF6B6B
                     )
@@ -1558,7 +1558,7 @@ class TicketChannelView(discord.ui.View):
                     logger.warning(f"Could not update control panel embed: {edit_error}")
 
                 embed = discord.Embed(
-                    title=f"<:j_icons_Correct:1382701297987485706> Priority Updated",
+                    title=f" Priority Updated",
                     description=f"**{interaction.user.display_name}** changed this ticket priority to **{priority_emoji} {priority}**.\n\nChannel name and control panel updated with new priority.",
                     color=0x00D4FF,
                     timestamp=datetime.now(timezone.utc)
@@ -1569,7 +1569,7 @@ class TicketChannelView(discord.ui.View):
             except Exception as e:
                 logger.error(f"Error setting priority: {e}")
                 error_embed = discord.Embed(
-                    title="<:icons_Wrong:1382701332955402341> Error",
+                    title=" Error",
                     description=f"Failed to set priority: {str(e)}",
                     color=0xFF6B6B
                 )
@@ -1664,7 +1664,7 @@ class TicketCloseConfirmationView(discord.ui.View):
         self.bot = bot
         self.ticket_data = ticket_data
 
-    @discord.ui.button(label="Continue", style=discord.ButtonStyle.danger, emoji="<:j_icons_Correct:1382701297987485706>")
+    @discord.ui.button(label="Continue", style=discord.ButtonStyle.danger, emoji="")
     async def confirm_close(self, interaction: discord.Interaction, button: discord.ui.Button):
         try:
             await interaction.response.defer(ephemeral=True)
@@ -1693,7 +1693,7 @@ class TicketCloseConfirmationView(discord.ui.View):
             if creator:
                 try:
                     closure_embed = discord.Embed(
-                        title="<:icons_locked:1382701901685985361> Your Ticket Has Been Closed",
+                        title=" Your Ticket Has Been Closed",
                         description=f"**Ticket #{ticket_number:04d}** has been closed by **{closer_name}**.\n\n"
                                    f"**Category:** {self.ticket_data.get('category', 'Unknown')}\n"
                                    f"**Subject:** {self.ticket_data.get('subject', 'No subject')}\n\n"
@@ -1724,7 +1724,7 @@ class TicketCloseConfirmationView(discord.ui.View):
                     logger.error(f"Error sending closure embed or transcript to user {creator.id}: {e}")
                     try:
                         fallback_embed = discord.Embed(
-                            title="<:icons_Wrong:1382701332955402341> DM Error",
+                            title=" DM Error",
                             description=f"{creator.mention}, there was an error sending your transcript. "
                                        f"Please contact support if you need a copy of your ticket transcript.",
                             color=0xFF6B6B
@@ -1771,17 +1771,17 @@ class TicketCloseConfirmationView(discord.ui.View):
                 )
                 await self.bot.db.commit()
 
-            await interaction.followup.send("<:j_icons_Correct:1382701297987485706> Ticket closed successfully.", ephemeral=True)
+            await interaction.followup.send(" Ticket closed successfully.", ephemeral=True)
             await asyncio.sleep(1)
             await channel.delete(reason=f"Ticket #{ticket_number:04d} closed by {interaction.user}")
 
         except Exception as e:
             logger.error(f"Error closing ticket: {e}")
-            await interaction.followup.send(f"<:icons_Wrong:1382701332955402341> Error closing ticket: {str(e)}", ephemeral=True)
+            await interaction.followup.send(f" Error closing ticket: {str(e)}", ephemeral=True)
 
-    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.secondary, emoji="<:icons_Wrong:1382701332955402341>")
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.secondary, emoji="")
     async def cancel_close(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message("<:icons_Wrong:1382701332955402341> Ticket close cancelled.", ephemeral=True)
+        await interaction.response.send_message(" Ticket close cancelled.", ephemeral=True)
 
 class TicketClosedLogView(discord.ui.View):
     def __init__(self, bot, ticket_data):
