@@ -60,7 +60,7 @@ class TicketModal(discord.ui.Modal):
             user_id = interaction.user.id
             if await check_rate_limit(self.bot, user_id):
                 await interaction.followup.send(
-                    "<:icons_Wrong:1382701332955402341> You're creating tickets too quickly. Please wait 60 seconds before creating another ticket.",
+                    " You're creating tickets too quickly. Please wait 60 seconds before creating another ticket.",
                     ephemeral=True
                 )
                 return
@@ -68,7 +68,7 @@ class TicketModal(discord.ui.Modal):
             ticket_limit_ok, current_tickets, max_tickets = await check_user_ticket_limit(self.bot, self.guild_id, user_id)
             if not ticket_limit_ok:
                 await interaction.followup.send(
-                    f"<:icons_Wrong:1382701332955402341> You have reached the maximum ticket limit ({current_tickets}/{max_tickets}). Please close existing tickets before creating new ones.",
+                    f" You have reached the maximum ticket limit ({current_tickets}/{max_tickets}). Please close existing tickets before creating new ones.",
                     ephemeral=True
                 )
                 return
@@ -80,7 +80,7 @@ class TicketModal(discord.ui.Modal):
                 )
                 if await cur.fetchone():
                     await interaction.followup.send(
-                        "<:icons_Wrong:1382701332955402341> You are blacklisted from creating tickets in this server.",
+                        " You are blacklisted from creating tickets in this server.",
                         ephemeral=True
                     )
                     return
@@ -90,7 +90,7 @@ class TicketModal(discord.ui.Modal):
                 result = await cur.fetchone()
                 if result and result[0]:
                     await interaction.followup.send(
-                        "<:icons_wrench:1382702984940617738> The ticket system is currently under maintenance. Please try again later.",
+                        " The ticket system is currently under maintenance. Please try again later.",
                         ephemeral=True
                     )
                     return
@@ -105,18 +105,18 @@ class TicketModal(discord.ui.Modal):
                 if success:
                     await set_rate_limit(self.bot, user_id)
                     await interaction.followup.send(
-                        f"<:j_icons_Correct:1382701297987485706> {message}",
+                        f" {message}",
                         ephemeral=True
                     )
                 else:
                     await interaction.followup.send(
-                        f"<:icons_Wrong:1382701332955402341> {message}",
+                        f" {message}",
                         ephemeral=True
                     )
             except Exception as ticket_error:
                 logger.error(f"Error creating ticket: {ticket_error}")
                 await interaction.followup.send(
-                    f"<:icons_Wrong:1382701332955402341> Failed to create ticket: {str(ticket_error)}",
+                    f" Failed to create ticket: {str(ticket_error)}",
                     ephemeral=True
                 )
 
@@ -124,7 +124,7 @@ class TicketModal(discord.ui.Modal):
             logger.error(f"Error in ticket modal submission: {e}")
             try:
                 await interaction.followup.send(
-                    "<:icons_Wrong:1382701332955402341> An error occurred while creating your ticket. Please try again.",
+                    " An error occurred while creating your ticket. Please try again.",
                     ephemeral=True
                 )
             except:
@@ -134,7 +134,7 @@ class TicketModal(discord.ui.Modal):
         logger.error(f"Modal error: {error}")
         try:
             await interaction.response.send_message(
-                "<:icons_Wrong:1382701332955402341> An error occurred. Please try again.",
+                " An error occurred. Please try again.",
                 ephemeral=True
             )
         except:
@@ -142,13 +142,13 @@ class TicketModal(discord.ui.Modal):
 
 class PanelCustomizationModal(discord.ui.Modal):
     def __init__(self, setup_view):
-        super().__init__(title="<:paint_icons:1383849816022581332> Panel Customization")
+        super().__init__(title=" Panel Customization")
         self.setup_view = setup_view
 
     embed_title = discord.ui.TextInput(
         label="Panel Title",
-        placeholder="e.g., <:Ticket_icons:1382703084815257610> Support Center",
-        default="<:Ticket_icons:1382703084815257610> Support Center",
+        placeholder="e.g.,  Support Center",
+        default=" Support Center",
         max_length=100,
         required=True
     )
@@ -157,7 +157,7 @@ class PanelCustomizationModal(discord.ui.Modal):
         label="Panel Description",
         placeholder="e.g., Need assistance? Our expert team is here to help!",
         style=discord.TextStyle.paragraph,
-        default="Need assistance? Select a category below to create a support ticket. Our expert team will help you shortly! <:UA_Rocket_icons:1382701592851124254>",
+        default="Need assistance? Select a category below to create a support ticket. Our expert team will help you shortly! ",
         max_length=500,
         required=True
     )
@@ -172,8 +172,8 @@ class PanelCustomizationModal(discord.ui.Modal):
 
     embed_footer = discord.ui.TextInput(
         label="Panel Footer",
-        placeholder="e.g., Powered by CodeX Development™",
-        default="Powered by CodeX Development™ • Support System",
+        placeholder="e.g., Powered by Space Development™",
+        default="Powered by Space Development™ • Support System",
         max_length=100,
         required=False
     )
@@ -207,7 +207,7 @@ class PanelCustomizationModal(discord.ui.Modal):
 
             current_time = utc_to_gmt(discord.utils.utcnow())
             embed = discord.Embed(
-                title="<:j_icons_Correct:1382701297987485706> Panel Customization Saved",
+                title=" Panel Customization Saved",
                 description="**Your panel customization has been applied!**\n\n"
                            "The changes will be visible when you finish the setup and deploy your panel.",
                 color=0x00FF88,
@@ -215,7 +215,7 @@ class PanelCustomizationModal(discord.ui.Modal):
             )
 
             embed.add_field(
-                name="<:paint_icons:1383849816022581332> Customization Preview",
+                name=" Customization Preview",
                 value=f"**Title:** {self.embed_title.value}\n"
                       f"**Color:** #{hex(self.setup_view.setup_data['embed_color'])[2:].upper()}\n"
                       f"**Footer:** {self.embed_footer.value[:50]}{'...' if len(self.embed_footer.value) > 50 else ''}",
@@ -228,7 +228,7 @@ class PanelCustomizationModal(discord.ui.Modal):
         except Exception as e:
             logger.error(f"Error in panel customization modal: {e}")
             error_embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Customization Error",
+                title=" Customization Error",
                 description=f"**Failed to save customization:** {str(e)}",
                 color=0xFF6B6B
             )
@@ -270,11 +270,11 @@ class TicketSetupModal(discord.ui.Modal):
             log_channel = interaction.guild.get_channel(log_channel_id) if log_channel_id else None
 
             if not channel:
-                await interaction.followup.send("<:icons_Wrong:1382701332955402341> Support channel not found!", ephemeral=True)
+                await interaction.followup.send(" Support channel not found!", ephemeral=True)
                 return
 
             if not role:
-                await interaction.followup.send("<:icons_Wrong:1382701332955402341> Support role not found!", ephemeral=True)
+                await interaction.followup.send(" Support role not found!", ephemeral=True)
                 return
 
             async with self.bot.db.cursor() as cur:
@@ -286,7 +286,7 @@ class TicketSetupModal(discord.ui.Modal):
                 await self.bot.db.commit()
 
             embed = discord.Embed(
-                title="<:j_icons_Correct:1382701297987485706> Setup Complete",
+                title=" Setup Complete",
                 description=f"**Ticket system configured successfully!**\n\n"
                            f"**Support Channel:** {channel.mention}\n"
                            f"**Support Role:** {role.mention}\n"
@@ -296,10 +296,10 @@ class TicketSetupModal(discord.ui.Modal):
             await interaction.followup.send(embed=embed, ephemeral=True)
 
         except ValueError:
-            await interaction.followup.send("<:icons_Wrong:1382701332955402341> Invalid ID format! Please use numbers only.", ephemeral=True)
+            await interaction.followup.send(" Invalid ID format! Please use numbers only.", ephemeral=True)
         except Exception as e:
             logger.error(f"Error in setup modal: {e}")
-            await interaction.followup.send(f"<:icons_Wrong:1382701332955402341> Setup failed: {str(e)}", ephemeral=True)
+            await interaction.followup.send(f" Setup failed: {str(e)}", ephemeral=True)
 
 class TicketLimitModal(discord.ui.Modal):
     def __init__(self, setup_view):
@@ -320,7 +320,7 @@ class TicketLimitModal(discord.ui.Modal):
             limit = int(self.ticket_limit.value)
             if limit < 1 or limit > 10:
                 embed = discord.Embed(
-                    title="<:icons_Wrong:1382701332955402341> Invalid Limit",
+                    title=" Invalid Limit",
                     description="Ticket limit must be between 1 and 10.",
                     color=0xFF0000
                 )
@@ -338,7 +338,7 @@ class TicketLimitModal(discord.ui.Modal):
 
         except ValueError:
             embed = discord.Embed(
-                title="<:icons_Wrong:1382701332955402341> Invalid Input",
+                title=" Invalid Input",
                 description="Please enter a valid number between 1 and 10.",
                 color=0xFF0000
             )
