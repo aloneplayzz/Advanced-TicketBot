@@ -258,7 +258,7 @@ async def create_ticket_channel(bot, guild: discord.Guild, user: discord.Member,
 
         current_time = discord.utils.utcnow()
         embed = discord.Embed(
-            title=f"<:Ticket_icons:1382703084815257610> Support Ticket",
+            title=f" Support Ticket",
             description=f"**Welcome to your support ticket, {user.mention}!**\n\n"
                        f"Our support team has been notified and will assist you shortly.\n"
                        f"Please provide any additional details about your issue below.",
@@ -267,7 +267,7 @@ async def create_ticket_channel(bot, guild: discord.Guild, user: discord.Member,
         )
 
         embed.add_field(
-            name="<:clipboard1:1383857546410070117> **Ticket Information**",
+            name=" **Ticket Information**",
             value=f"**Category:** {category}\n"
                   f"**Subject:** {subject}\n"
                   f"**Priority:** {get_priority_emoji(priority)} {priority}\n"
@@ -276,13 +276,13 @@ async def create_ticket_channel(bot, guild: discord.Guild, user: discord.Member,
         )
 
         embed.add_field(
-            name="<:icon_write:1382704744782499882> **Issue Description**",
+            name=" **Issue Description**",
             value=f"```{description[:200]}{'...' if len(description) > 200 else ''}```",
             inline=False
         )
 
         embed.set_footer(
-            text="CodeX Support System • Ticket Management",
+            text="Space Support System • Ticket Management",
             icon_url=bot.user.display_avatar.url
         )
 
@@ -345,7 +345,7 @@ async def create_ticket_channel(bot, guild: discord.Guild, user: discord.Member,
 
             await cur.execute("SELECT emoji FROM ticket_categories WHERE guild_id = ? AND category_name = ?", (guild.id, category))
             emoji_result = await cur.fetchone()
-            category_emoji = emoji_result[0] if emoji_result and emoji_result[0] else "<:Ticket_icons:1382703084815257610>"
+            category_emoji = emoji_result[0] if emoji_result and emoji_result[0] else ""
 
             priority_emojis = {
                 "Low": "🟢",
@@ -421,7 +421,7 @@ async def create_ticket_channel(bot, guild: discord.Guild, user: discord.Member,
 
             current_time = discord.utils.utcnow()
             embed = discord.Embed(
-                title=f"<:Ticket_icons:1382703084815257610> Ticket",
+                title=f" Ticket",
                 description=f"**Welcome to your support ticket, {user.mention}!**\n\n"
                            f"Our team has been notified and will assist you shortly.\n"
                            f"Please provide any additional details about your issue.",
@@ -430,7 +430,7 @@ async def create_ticket_channel(bot, guild: discord.Guild, user: discord.Member,
             )
 
             embed.add_field(
-                name="<:clipboard1:1383857546410070117> Ticket Information",
+                name=" Ticket Information",
                 value=f"**Category:** {category}\n"
                       f"**Subject:** {subject}\n"
                       f"**Priority:** {get_priority_emoji(priority)} {priority}\n"
@@ -439,13 +439,13 @@ async def create_ticket_channel(bot, guild: discord.Guild, user: discord.Member,
             )
 
             embed.add_field(
-                name="<:lightbulb:1382701619753386035> Description",
+                name=" Description",
                 value=description[:1000] + "..." if len(description) > 1000 else description,
                 inline=False
             )
 
             embed.add_field(
-                name="<:Target:1382706193855942737> Next Steps",
+                name=" Next Steps",
                 value="• Support staff will be with you shortly\n"
                       "• Use the buttons below to manage your ticket\n"
                       "• Add any additional information as needed",
