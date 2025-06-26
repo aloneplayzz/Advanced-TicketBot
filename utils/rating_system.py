@@ -56,7 +56,7 @@ class RatingView(discord.ui.View):
         try:
             if interaction.user.id != self.creator_id:
                 await interaction.response.send_message(
-                    "<:icons_Wrong:1382701332955402341> Only the ticket creator can rate this ticket.",
+                    " Only the ticket creator can rate this ticket.",
                     ephemeral=True
                 )
                 return
@@ -70,7 +70,7 @@ class RatingView(discord.ui.View):
 
                 if existing_rating:
                     await interaction.response.send_message(
-                        "<:icons_Wrong:1382701332955402341> You have already submitted a rating for this ticket.",
+                        " You have already submitted a rating for this ticket.",
                         ephemeral=True
                     )
                     return
@@ -83,7 +83,7 @@ class RatingView(discord.ui.View):
             logger.error(f"Error in rating select: {e}")
             try:
                 await interaction.response.send_message(
-                    "<:icons_Wrong:1382701332955402341> An error occurred while processing your rating. Please try again.",
+                    " An error occurred while processing your rating. Please try again.",
                     ephemeral=True
                 )
             except:
