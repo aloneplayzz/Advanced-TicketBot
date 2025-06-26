@@ -59,7 +59,7 @@ class TicketCategorySelect(discord.ui.Select):
             
             if not self.values:
                 await interaction.response.send_message(
-                    "<:icons_Wrong:1382701332955402341> No category selected. Please try again.",
+                    " No category selected. Please try again.",
                     ephemeral=True
                 )
                 return
@@ -74,14 +74,14 @@ class TicketCategorySelect(discord.ui.Select):
 
             if maintenance_mode:
                 await interaction.response.send_message(
-                    "<:icons_wrench:1382702984940617738> The ticket system is currently under maintenance. Please try again later.",
+                    " The ticket system is currently under maintenance. Please try again later.",
                     ephemeral=True
                 )
                 return
 
             if await check_rate_limit(self.bot, interaction.user.id):
                 await interaction.response.send_message(
-                    "<:icons_Wrong:1382701332955402341> You're creating tickets too quickly. Please wait 60 seconds before creating another ticket.",
+                    " You're creating tickets too quickly. Please wait 60 seconds before creating another ticket.",
                     ephemeral=True
                 )
                 return
@@ -93,7 +93,7 @@ class TicketCategorySelect(discord.ui.Select):
                 )
                 if await cur.fetchone():
                     await interaction.response.send_message(
-                        "<:icons_Wrong:1382701332955402341> You are blacklisted from creating tickets in this server.",
+                        " You are blacklisted from creating tickets in this server.",
                         ephemeral=True
                     )
                     return
@@ -107,7 +107,7 @@ class TicketCategorySelect(discord.ui.Select):
 
             if open_tickets >= ticket_limit:
                 await interaction.response.send_message(
-                    f"<:Ticket_icons:1382703084815257610> You already have {open_tickets} open tickets. Please close some before creating new ones.",
+                    f" You already have {open_tickets} open tickets. Please close some before creating new ones.",
                     ephemeral=True
                 )
                 return
@@ -130,12 +130,12 @@ class TicketCategorySelect(discord.ui.Select):
             try:
                 if not interaction.response.is_done():
                     await interaction.response.send_message(
-                        f"<:icons_Wrong:1382701332955402341> Error: {type(e).__name__}: {str(e)[:150]}",
+                        f" Error: {type(e).__name__}: {str(e)[:150]}",
                         ephemeral=True
                     )
                 else:
                     await interaction.followup.send(
-                        f"<:icons_Wrong:1382701332955402341> Error: {type(e).__name__}: {str(e)[:150]}",
+                        f" Error: {type(e).__name__}: {str(e)[:150]}",
                         ephemeral=True
                     )
             except Exception as follow_error:
@@ -183,14 +183,14 @@ class TicketCategoryButton(discord.ui.Button):
 
             if maintenance_mode:
                 await interaction.response.send_message(
-                    "<:icons_wrench:1382702984940617738> The ticket system is currently under maintenance. Please try again later.",
+                    " The ticket system is currently under maintenance. Please try again later.",
                     ephemeral=True
                 )
                 return
 
             if await check_rate_limit(self.bot, interaction.user.id):
                 await interaction.response.send_message(
-                    "<:icons_Wrong:1382701332955402341> You're creating tickets too quickly. Please wait 60 seconds before creating another ticket.",
+                    " You're creating tickets too quickly. Please wait 60 seconds before creating another ticket.",
                     ephemeral=True
                 )
                 return
@@ -202,7 +202,7 @@ class TicketCategoryButton(discord.ui.Button):
                 )
                 if await cur.fetchone():
                     await interaction.response.send_message(
-                        "<:icons_Wrong:1382701332955402341> You are blacklisted from creating tickets in this server.",
+                        " You are blacklisted from creating tickets in this server.",
                         ephemeral=True
                     )
                     return
@@ -216,7 +216,7 @@ class TicketCategoryButton(discord.ui.Button):
 
             if open_tickets >= ticket_limit:
                 await interaction.response.send_message(
-                    f"<:Ticket_icons:1382703084815257610> You already have {open_tickets} open tickets. Please close some before creating new ones.",
+                    f" You already have {open_tickets} open tickets. Please close some before creating new ones.",
                     ephemeral=True
                 )
                 return
@@ -239,12 +239,12 @@ class TicketCategoryButton(discord.ui.Button):
             try:
                 if not interaction.response.is_done():
                     await interaction.response.send_message(
-                        f"<:icons_Wrong:1382701332955402341> Error: {type(e).__name__}: {str(e)[:150]}",
+                        f" Error: {type(e).__name__}: {str(e)[:150]}",
                         ephemeral=True
                     )
                 else:
                     await interaction.followup.send(
-                        f"<:icons_Wrong:1382701332955402341> Error: {type(e).__name__}: {str(e)[:150]}",
+                        f" Error: {type(e).__name__}: {str(e)[:150]}",
                         ephemeral=True
                     )
             except Exception as follow_error:
